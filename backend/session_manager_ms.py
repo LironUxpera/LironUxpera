@@ -23,7 +23,7 @@ def event():
     event_obj.parse(record)
 
     # update session manager with event
-    session_mgr.add_event()
+    session_mgr.add_event(event)
 
     # save event to events table
     event_obj.save_event()
