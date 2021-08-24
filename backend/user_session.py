@@ -45,5 +45,5 @@ class UserSession:
         return behaviour
 
     def replace_generic_banner(self):
-        html = self.assumed_behaviour
+        html = f'{self.assumed_behaviour} BANNER'
         command_sender.push_banner_to_user(self.client, self.uuid, html)
