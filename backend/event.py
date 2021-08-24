@@ -13,7 +13,7 @@ class Event:
         self.uuid = ''
         self.event_type = ''
         self.time = 0
-        self.body = ''
+        self.body = None
 
     def __str__(self):
         return f'Client: {self.client}\n' \
