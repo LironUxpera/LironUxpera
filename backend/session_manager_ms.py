@@ -1,8 +1,10 @@
 import json
 from bottle import Bottle, request
 from event import Event
+from session_manager import SessionManager
 
 app = Bottle()
+session_mgr = SessionManager()
 
 
 @app.get("/hello")
@@ -16,8 +18,14 @@ def event():
 
     print(json.dumps(record, indent=2))
 
+    # parse event
     event_obj = Event()
     event_obj.parse(record)
+
+    # update session manager with event
+    session_mgr.add_event()
+
+    # save event to events table
     event_obj.save_event()
 
     return "OK"
