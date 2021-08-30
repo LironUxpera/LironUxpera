@@ -13,20 +13,6 @@ class UserSession:
         self.replaced_generic_banner = False
         self.events = []
 
-    def __str__(self):
-        result = ''
-        # for client in self.clients.keys():
-        #     for uuid in self.clients[client].keys():
-        #         user_event
-        #         user_str = f'Client: {client}\n' \
-        #                    f'UUID: {uuid}\n' \
-        #                    f'Type: {self.event_type}\n' \
-        #                    f'Time: {self.time}\n' \
-        #                    f'Body: {self.body}\n' \
-        #                     '===================='
-        #         result = result + user_str
-        return result
-
     def add_event(self, event):
         self.events.append(event)
         if not self.replaced_generic_banner:
@@ -47,3 +33,5 @@ class UserSession:
     def replace_generic_banner(self):
         html = f'{self.assumed_behaviour} BANNER'
         command_sender.push_banner_to_user(self.client, self.uuid, html)
+        self.replaced_generic_banner = True
+
