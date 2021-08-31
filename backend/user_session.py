@@ -116,39 +116,41 @@ class UserSession:
         copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
         cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
         if promotional:
+            print('Promotional banner')
             print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
             # replace text1
-            html_id = self.desktop_promotional_banner.find(id='ID33_OFF_ON_SUMMER_SALE_br')
+            html_id = html.find(id='ID33_OFF_ON_SUMMER_SALE_br')
             new = f'<div id="ID33_OFF_ON_SUMMER_SALE_br"><span>{copy_text1}</span></div>'
             new_soup = BeautifulSoup(new)
             html_id.replace_with(new_soup)
 
             # replace text2
-            html_id = self.desktop_promotional_banner.find(id='AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq')
+            html_id = html.find(id='AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq')
             new = f'<div id="AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq"><span>{copy_text2}</span></div>'
             new_soup = BeautifulSoup(new)
             html_id.replace_with(new_soup)
 
             # replace cta
-            html_id = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
+            html_id = html.find(id='SEE_PLANS_AND_PRICING')
             new = f'<div id="SEE_PLANS_AND_PRICING"><span>{cta_text}</span></div>'
             new_soup = BeautifulSoup(new)
             html_id.replace_with(new_soup)
 
         else:
             ref_text = self.copy_df[self.copy_df.id == copy].iloc[0]['ref']
+            print('Review banner')
             print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
 
             # replace text1 & ref
-            html_id = self.desktop_promotional_banner.find(id='Livia_has_been_incredible_for_')
+            html_id = html.find(id='Livia_has_been_incredible_for_')
             new = f'<div id="Livia_has_been_incredible_for_"><span style="text-transform:uppercase;">{copy_text1}</span>' \
                   f'<br><span style="font-family:Source Sans Pro;font-style:normal;font-weight:bold;font-size:20px;color:rgba(246,105,135,1);text-transform:uppercase;">{ref_text}</span></div>'
             new_soup = BeautifulSoup(new)
             html_id.replace_with(new_soup)
 
             # replace cta
-            html_id = self.desktop_promotional_banner.find(id='SEE_PLANS__PRICING')
+            html_id = html.find(id='SEE_PLANS__PRICING')
             new = f'<div id="SEE_PLANS__PRICING"><span>{cta_text}</span></div>'
             new_soup = BeautifulSoup(new)
             html_id.replace_with(new_soup)
