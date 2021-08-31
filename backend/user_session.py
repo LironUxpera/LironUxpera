@@ -1,4 +1,5 @@
 import pandas as pd
+import random
 from bs4 import BeautifulSoup
 from send_command import SendCommand
 
@@ -22,12 +23,27 @@ class UserSession:
         self.sb_10_sec_events = ['terms_and_cond', 'security_and_priv', 'about_us', 'browsing_no_click',
                           'Scrolling_To_Second_Part', 'scrolling_to_third']
 
+        # load the behavior mapping, copy & cta tables
+        self.behavior_mapping_df = None
+        self.copy_df = None
+        self.cta_df = None
+        self._load_data_tables()
+
         # load the livia banners
         self.desktop_promotional_banner = ''
         self.desktop_review_banner = ''
         self.mobile_promotional_banner = ''
         self.mobile_review_banner = ''
         self._load_banners()
+
+    def _load_data_tables(self):
+        self.behavior_mapping_df = pd.read_excel('../data/behavior_mapping.xlsx')
+        self.behavior_mapping_df['copy'] = self.behavior_mapping_df['copy'].apply(lambda x: x.split(','))
+        self.behavior_mapping_df['cta'] = self.behavior_mapping_df['cta'].apply(lambda x: x.split(','))
+        self.behavior_mapping_df.set_index('behavior', inplace=True)
+
+        self.copy_df = pd.read_csv('../data/copy-general-livia.csv')
+        self.cta_df = pd.read_csv('../data/cta-general.csv')
 
     def _load_banners(self):
         with open('../banners/desktop_1000x100_promotional.html', 'rt') as file:
@@ -82,6 +98,18 @@ class UserSession:
         return behaviour
 
     def replace_generic_banner(self):
+        copy = random.choice(self.behavior_mapping_df.loc[self.assumed_behaviour]['copy'])
+        cta = random.choice(self.behavior_mapping_df.loc[self.assumed_behaviour]['cta'])
+        print(f'behaviour={self.assumed_behaviour} copy={copy} cta={cta}')
+
+        copy_text = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy']
+        ref_text = self.copy_df[self.copy_df.id == int(cta)].iloc[0]['ref']
+        cta_text = self.cta_df[self.cta_df.id == int(cta)].iloc[0]['cta']
+        print(f'copy_text="{copy_text}" ref_text="{ref_text}" cta_text="{cta_text}"')
+
+        # TODO select whcih banner to use
+        # TODO replace copy, cta & ref
+
         html = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
         new = f'<div id="SEE_PLANS_AND_PRICING"><span>{self.assumed_behaviour} BANNER</span></div>'
         new_soup = BeautifulSoup(new)
