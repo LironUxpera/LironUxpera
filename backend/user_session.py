@@ -103,11 +103,12 @@ class UserSession:
         print(f'behaviour={self.assumed_behaviour} copy={copy} cta={cta}')
 
         copy_text = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy']
-        ref_text = self.copy_df[self.copy_df.id == int(cta)].iloc[0]['ref']
+        # ref_text = self.copy_df[self.copy_df.id == int(cta)].iloc[0]['ref']
         cta_text = self.cta_df[self.cta_df.id == int(cta)].iloc[0]['cta']
-        print(f'copy_text="{copy_text}" ref_text="{ref_text}" cta_text="{cta_text}"')
+        # print(f'copy_text="{copy_text}" ref_text="{ref_text}" cta_text="{cta_text}"')
+        print(f'copy_text="{copy_text}" cta_text="{cta_text}"')
 
-        # TODO select whcih banner to use
+        # TODO select which banner to use
         # TODO replace copy, cta & ref
 
         html = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
