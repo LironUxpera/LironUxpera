@@ -26,6 +26,7 @@ class UserSession:
         if not self.replaced_generic_banner:
             behavior = self.check_behaviour()
             if behavior:
+                print(f'== Behaviour={behavior}')
                 self.assumed_behaviour = behavior
                 self.replace_generic_banner()
 
@@ -37,6 +38,7 @@ class UserSession:
         last_event = self.events[-1]
         last_time = last_event.time
         last_type = last_event.event_type
+        print(f'== Checking time={last_time} event={last_type}')
 
         # for now check only for events in first 5 seconds
         if last_time > 10000 and last_type in self.sb_10_sec_events:

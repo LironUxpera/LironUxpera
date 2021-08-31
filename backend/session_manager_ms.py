@@ -16,11 +16,12 @@ def hello():
 def event():
     record = request.json
 
-    print(json.dumps(record, indent=2))
+    # print(json.dumps(record, indent=2))
 
     # parse event
     event_obj = Event()
     event_obj.parse(record)
+    print(event_obj)
 
     # update session manager with event
     session_mgr.add_event(event_obj)
