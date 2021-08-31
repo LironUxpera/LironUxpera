@@ -111,10 +111,11 @@ class UserSession:
         # TODO select which banner to use
         # TODO replace copy, cta & ref
 
-        html = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
+        html = self.desktop_promotional_banner
+        html_id = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
         new = f'<div id="SEE_PLANS_AND_PRICING"><span>{self.assumed_behaviour} BANNER</span></div>'
         new_soup = BeautifulSoup(new)
-        html.replace_with(new_soup)
+        html_id.replace_with(new_soup)
         # html = f'{self.assumed_behaviour} BANNER'
 
         command_sender.push_banner_to_user(self.client, self.uuid, str(html))
