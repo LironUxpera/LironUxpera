@@ -31,6 +31,7 @@ class Event:
 
         # fix amir's event names for links
         if self.client == 'link' and 'title' in self.body:
+            print('*** link with title')
             title = self.body['title']
             if title == 'Terms And Conditions':
                 self.event_type = 'terms_and_cond'
@@ -46,6 +47,8 @@ class Event:
                 self.event_type = 'promotions'
             elif title == 'Reviews':
                 self.event_type = 'reviews'
+        else:
+            print('*** NOT link with title')
 
     def save_event(self):
         """save event to mongo"""

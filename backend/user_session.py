@@ -22,6 +22,7 @@ class UserSession:
                           'Scrolling_To_Second_Part', 'scrolling_to_third']
 
     def add_event(self, event):
+        print('User Add event')
         self.events.append(event)
         if not self.replaced_generic_banner:
             behavior = self.check_behaviour()
