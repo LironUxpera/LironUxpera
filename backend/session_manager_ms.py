@@ -16,7 +16,7 @@ def hello():
 def event():
     record = request.json
 
-    # print(json.dumps(record, indent=2))
+    print(json.dumps(record, indent=2))
 
     # parse event
     event_obj = Event()
