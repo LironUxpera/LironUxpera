@@ -97,27 +97,67 @@ class UserSession:
 
         return behaviour
 
-    def replace_generic_banner(self):
+    def _calc_banner(self):
         copy = random.choice(self.behavior_mapping_df.loc[self.assumed_behaviour]['copy'])
+        copy = int(copy)
         cta = random.choice(self.behavior_mapping_df.loc[self.assumed_behaviour]['cta'])
+        cta = int(cta)
         print(f'behaviour={self.assumed_behaviour} copy={copy} cta={cta}')
 
-        copy_text = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy']
-        # ref_text = self.copy_df[self.copy_df.id == int(cta)].iloc[0]['ref']
+        # check if to use promotional or review banner
+        if copy % 100 == 6 or copy % 100 == 7:
+            promotional = True
+            html = self.desktop_promotional_banner
+        else:
+            promotional = False
+            html = self.desktop_review_banner
+
+        copy_text1 = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy1']
+        copy_text2 = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy2']
         cta_text = self.cta_df[self.cta_df.id == int(cta)].iloc[0]['cta']
-        # print(f'copy_text="{copy_text}" ref_text="{ref_text}" cta_text="{cta_text}"')
-        print(f'copy_text="{copy_text}" cta_text="{cta_text}"')
+        if promotional:
+            print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
-        # TODO select which banner to use
-        # TODO replace copy, cta & ref
+            # replace text1
+            html_id = self.desktop_promotional_banner.find(id='ID33_OFF_ON_SUMMER_SALE_br')
+            new = f'<div id="ID33_OFF_ON_SUMMER_SALE_br"><span>{copy_text1}</span></div>'
+            new_soup = BeautifulSoup(new)
+            html_id.replace_with(new_soup)
 
-        html = self.desktop_promotional_banner
-        html_id = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
-        new = f'<div id="SEE_PLANS_AND_PRICING"><span>{self.assumed_behaviour} BANNER</span></div>'
-        new_soup = BeautifulSoup(new)
-        html_id.replace_with(new_soup)
+            # replace text2
+            html_id = self.desktop_promotional_banner.find(id='AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq')
+            new = f'<div id="AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq"><span>{copy_text2}</span></div>'
+            new_soup = BeautifulSoup(new)
+            html_id.replace_with(new_soup)
+
+            # replace cta
+            html_id = self.desktop_promotional_banner.find(id='SEE_PLANS_AND_PRICING')
+            new = f'<div id="SEE_PLANS_AND_PRICING"><span>{cta_text}</span></div>'
+            new_soup = BeautifulSoup(new)
+            html_id.replace_with(new_soup)
+
+        else:
+            ref_text = self.copy_df[self.copy_df.id == int(cta)].iloc[0]['ref']
+            print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
+
+            # replace text1 & ref
+            html_id = self.desktop_promotional_banner.find(id='Livia_has_been_incredible_for_')
+            new = f'<div id="Livia_has_been_incredible_for_"><span style="text-transform:uppercase;">{copy_text1}</span>' \
+                  f'<br><span style="font-family:Source Sans Pro;font-style:normal;font-weight:bold;font-size:20px;color:rgba(246,105,135,1);text-transform:uppercase;">{ref_text}</span></div>'
+            new_soup = BeautifulSoup(new)
+            html_id.replace_with(new_soup)
+
+            # replace cta
+            html_id = self.desktop_promotional_banner.find(id='SEE_PLANS__PRICING')
+            new = f'<div id="SEE_PLANS__PRICING"><span>{cta_text}</span></div>'
+            new_soup = BeautifulSoup(new)
+            html_id.replace_with(new_soup)
+
+        return html
+
+    def replace_generic_banner(self):
         # html = f'{self.assumed_behaviour} BANNER'
-
+        html = self._calc_banner()
         command_sender.push_banner_to_user(self.client, self.uuid, str(html))
         self.replaced_generic_banner = True
 
