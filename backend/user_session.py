@@ -31,13 +31,13 @@ class UserSession:
 
     def _load_banners(self):
         with open('../banners/desktop_1000x100_promotional.html', 'rt') as file:
-            self.desktop_promotional_banner = BeautifulSoup(file.read())
+            self.desktop_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
         with open('../banners/desktop_1000x100_review.html', 'rt') as file:
-            self.desktop_review_banner = BeautifulSoup(file.read())
+            self.desktop_review_banner = BeautifulSoup(file.read(), features="html.parser")
         with open('../banners/android_720_X150_promotional.html', 'rt') as file:
-            self.mobile_promotional_banner = BeautifulSoup(file.read())
+            self.mobile_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
         with open('../banners/android_720_review.html', 'rt') as file:
-            self.mobile_review_banner = BeautifulSoup(file.read())
+            self.mobile_review_banner = BeautifulSoup(file.read(), features="html.parser")
 
     def add_event(self, event):
         print('User Add event')
@@ -87,7 +87,7 @@ class UserSession:
         new_soup = BeautifulSoup(new)
         html.replace_with(new_soup)
         # html = f'{self.assumed_behaviour} BANNER'
-        
-        command_sender.push_banner_to_user(self.client, self.uuid, html)
+
+        command_sender.push_banner_to_user(self.client, self.uuid, str(html))
         self.replaced_generic_banner = True
 
