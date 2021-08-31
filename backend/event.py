@@ -29,6 +29,24 @@ class Event:
         self.time = int(msg_record["messageAttributes"]["Time"]["stringValue"])
         self.body = json.loads(msg_record["body"])
 
+        # fix amir's event names for links
+        if self.client == 'link' and 'title' in self.body:
+            title = self.body['title']
+            if title == 'Terms And Conditions':
+                self.event_type = 'terms_and_cond'
+            elif title == 'Security and Privacy':
+                self.event_type = 'security_and_priv'
+            elif title == 'About us':
+                self.event_type = 'about_us'
+            elif title == 'New Arrivals':
+                self.event_type = 'new_arrivals'
+            elif title == 'Best Sellers':
+                self.event_type = 'best_sellers'
+            elif title == 'Promotions':
+                self.event_type = 'promotions'
+            elif title == 'Reviews':
+                self.event_type = 'reviews'
+
     def save_event(self):
         """save event to mongo"""
 
