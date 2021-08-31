@@ -112,9 +112,9 @@ class UserSession:
             promotional = False
             html = self.desktop_review_banner
 
-        copy_text1 = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy1']
-        copy_text2 = self.copy_df[self.copy_df.id == int(copy)].iloc[0]['copy2']
-        cta_text = self.cta_df[self.cta_df.id == int(cta)].iloc[0]['cta']
+        copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
+        copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
+        cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
         if promotional:
             print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
@@ -137,7 +137,7 @@ class UserSession:
             html_id.replace_with(new_soup)
 
         else:
-            ref_text = self.copy_df[self.copy_df.id == int(cta)].iloc[0]['ref']
+            ref_text = self.copy_df[self.copy_df.id == copy].iloc[0]['ref']
             print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
 
             # replace text1 & ref
