@@ -139,6 +139,8 @@ class UserSession:
 
         else:
             ref_text = self.copy_df[self.copy_df.id == copy].iloc[0]['ref']
+            if ref_text == 'nan':
+                ref_text = ''
             print('Review banner')
             print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
 
