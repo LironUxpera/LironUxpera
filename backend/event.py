@@ -30,7 +30,7 @@ class Event:
         self.body = json.loads(msg_record["body"])
 
         # fix amir's event names for links
-        if self.client == 'link' and 'title' in self.body:
+        if self.event_type == 'link' and 'title' in self.body:
             print('*** link with title')
             title = self.body['title']
             if title == 'Terms And Conditions':
