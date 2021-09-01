@@ -20,8 +20,7 @@ class UserSession:
         self.bh_events = ['Clicked_Banner', 'promotions']
         self.nb_events = ['hp_banner_custom']
         self.sl_events = ['new_arrivals', 'best_sellers']
-        self.sb_events = ['reviews']
-        self.sb_10_sec_events = ['terms_and_cond', 'security_and_priv', 'about_us', 'browsing_no_click',
+        self.sb_events = ['reviews', 'timeout', 'terms_and_cond', 'security_and_priv', 'about_us', 'browsing_no_click',
                           'Scrolling_To_Second_Part', 'scrolling_to_third']
 
         # load the behavior mapping, copy & cta tables
@@ -76,25 +75,21 @@ class UserSession:
         last_type = last_event.event_type
         print(f'== Checking time={last_time} event={last_type}')
 
-        # for now check only for events in first 5 seconds
-        if last_time > 10000 and last_type in self.sb_10_sec_events:
-            behaviour = 'SB'
-            return behaviour
-
-        # left only to check for events in first 5 seconds
-        if last_time > 5000:
-            return behaviour
-
-        if last_type in self.dp_events:
-            behaviour = 'DP'
-        elif last_type in self.bh_events:
-            behaviour = 'BH'
-        elif last_type in self.nb_events:
-            behaviour = 'NBS'
-        elif last_type in self.sl_events:
-            behaviour = 'SL'
-        elif last_type in self.sb_events:
-            behaviour = 'SB'
+        # left check for events in first 5 seconds
+        if last_time <= 5000:
+            if last_type in self.dp_events:
+                behaviour = 'DP'
+            elif last_type in self.bh_events:
+                behaviour = 'BH'
+            elif last_type in self.nb_events:
+                behaviour = 'NBS'
+            elif last_type in self.sl_events:
+                behaviour = 'SL'
+            elif last_type in self.sb_events:
+                behaviour = 'SB'
+        elif last_time <= 15000:
+            if last_type in self.sb_events:
+                behaviour = 'SB'
 
         return behaviour
 
