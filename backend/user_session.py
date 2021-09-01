@@ -115,7 +115,7 @@ class UserSession:
 
         copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
         copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
-        if math.isnan(copy_text2):
+        if type(copy_text2) == float and math.isnan(copy_text2):
             copy_text2 = ''
         cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
         if promotional:
@@ -142,7 +142,7 @@ class UserSession:
 
         else:
             ref_text = self.copy_df[self.copy_df.id == copy].iloc[0]['ref']
-            if math.isnan(ref_text):
+            if type(ref_text) == float and math.isnan(ref_text):
                 ref_text = ''
             print('Review banner')
             print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
