@@ -146,7 +146,7 @@ class UserSession:
 
             # replace text1 & ref
             html_id = html.find(id='Livia_has_been_incredible_for_')
-            new = f'<div id="Livia_has_been_incredible_for_"><span style="text-transform:uppercase;">{copy_text1}</span>' \
+            new = f'<div id="Livia_has_been_incredible_for_"><span style="text-transform:uppercase;">{copy_text1} {copy_text2}</span>' \
                   f'<br><span style="font-family:Source Sans Pro;font-style:normal;font-weight:bold;font-size:20px;color:rgba(246,105,135,1);text-transform:uppercase;">{ref_text}</span></div>'
             new_soup = BeautifulSoup(new)
             html_id.replace_with(new_soup)
