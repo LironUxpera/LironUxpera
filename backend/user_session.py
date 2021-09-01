@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 import random
 from bs4 import BeautifulSoup
 from send_command import SendCommand
@@ -114,6 +115,8 @@ class UserSession:
 
         copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
         copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
+        if math.isnan(copy_text2):
+            copy_text2 = ''
         cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
         if promotional:
             print('Promotional banner')
@@ -139,7 +142,7 @@ class UserSession:
 
         else:
             ref_text = self.copy_df[self.copy_df.id == copy].iloc[0]['ref']
-            if ref_text == 'nan':
+            if math.isnan(ref_text):
                 ref_text = ''
             print('Review banner')
             print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
