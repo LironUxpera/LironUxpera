@@ -19,7 +19,7 @@ class DemoClientData(ClientData):
                           'Scrolling_To_Second_Part', 'scrolling_to_third']
 
     def _load_data_tables(self):
-        self.behavior_mapping_df = pd.read_excel(f'../{self.client}/data/behavior_mapping.xlsx')
+        self.behavior_mapping_df = pd.read_excel(f'../clients/{self.client}/data/behavior_mapping.xlsx')
         self.behavior_mapping_df['copy'] = self.behavior_mapping_df['copy'].apply(lambda x: x.split(','))
         self.behavior_mapping_df['cta'] = self.behavior_mapping_df['cta'].apply(lambda x: x.split(','))
         self.behavior_mapping_df.set_index('behavior', inplace=True)
