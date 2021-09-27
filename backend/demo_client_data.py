@@ -24,17 +24,17 @@ class DemoClientData(ClientData):
         self.behavior_mapping_df['cta'] = self.behavior_mapping_df['cta'].apply(lambda x: x.split(','))
         self.behavior_mapping_df.set_index('behavior', inplace=True)
 
-        self.copy_df = pd.read_csv(f'../{self.client}/data/copy-general-livia.csv')
-        self.cta_df = pd.read_csv(f'../{self.client}/data/cta-general.csv')
+        self.copy_df = pd.read_csv(f'../clients/{self.client}/data/copy-general-livia.csv')
+        self.cta_df = pd.read_csv(f'../clients/{self.client}/data/cta-general.csv')
 
     def _load_banners(self):
-        with open(f'../{self.client}/banners/desktop_1000x100_promotional.html', 'rt') as file:
+        with open(f'../clients/{self.client}/banners/desktop_1000x100_promotional.html', 'rt') as file:
             self.desktop_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
-        with open(f'../{self.client}/banners/desktop_1000x100_review.html', 'rt') as file:
+        with open(f'../clients/{self.client}/banners/desktop_1000x100_review.html', 'rt') as file:
             self.desktop_review_banner = BeautifulSoup(file.read(), features="html.parser")
-        with open(f'../{self.client}/banners/android_720_X150_promotional.html', 'rt') as file:
+        with open(f'../clients/{self.client}/banners/android_720_X150_promotional.html', 'rt') as file:
             self.mobile_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
-        with open(f'../{self.client}/banners/android_720_review.html', 'rt') as file:
+        with open(f'../clients/{self.client}/banners/android_720_review.html', 'rt') as file:
             self.mobile_review_banner = BeautifulSoup(file.read(), features="html.parser")
 
     def calc_banner(self, assumed_behaviour):
