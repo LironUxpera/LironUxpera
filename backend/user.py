@@ -7,6 +7,9 @@ from pymongo import MongoClient
 
 
 mongo_client = MongoClient()
+db = mongo_client.uxpera
+users = db.user
+user_sessions = db.userSession
 
 
 class User:
@@ -37,9 +40,19 @@ class User:
         self.behaviour = ''
 
         # global info
+        self.last_time = '0'  # last recorded time of event
         self.first_visit_dt = None  # first visit date
         self.last_visit_dt = None  # last visit date
         self.sessions = 0  # num of sessions
+
+        # check if user exists in mongo and if so read in data
+        self.new_user = True
+        record = self._find_user()
+        if record:
+            self.last_time = record['last_time']
+            self.first_visit_dt = record['first_visit_dt']
+            self.last_visit_dt = record['last_visit_dt']
+            self.sessions = record['sessions']
 
     def __str__(self):
         return f'Client: {self.client}\n' \
@@ -58,6 +71,21 @@ class User:
                f'PC: {self.is_pc}\n' \
                f'Bot: {self.is_bot}\n' \
                f'Behavior: {self.behaviour}\n'
+
+    def _find_user(self):
+        record = db.user.find_one({'client': self.client, 'uuid': self.uuid})
+        return record
+
+    # def update_or_insert_vilensky2(comp_id, period, object):
+    #     record = db.vilensky2.find_one({'company': comp_id, 'period': period})
+    #     if record:
+    #         return update_vilensky2(comp_id, period, object)
+    #     else:
+    #         return insert_vilensky2(comp_id, period, object)
+
+    def add_event(self, event):
+        # TODO handle different kinds of events
+        pass
 
     def start_event(self, time, body):
         self.time = time

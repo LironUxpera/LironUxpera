@@ -8,6 +8,10 @@ class SessionManager:
         self.clients = {}
         self.clients_data = {}
 
+        # TODO we need to think if keep everything in memory all the time or we purge from time to time
+        # TODO now that we save user info persistently. We should  probably clear users who have old sessions
+        # TODO in that case we also need to restore events when we read it back - perhaps unless we are sure it is a new session
+
         # TODO this list should probably be in csv or simply read all folders under client
         # TODO for now we will hard code the list
         client_data = DemoClientData()

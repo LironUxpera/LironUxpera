@@ -1,3 +1,4 @@
+from user import User
 from send_command import SendCommand
 
 command_sender = SendCommand()
@@ -9,6 +10,8 @@ class UserSession:
         self.uuid = uuid
         self.client_data = client_data
 
+        self.user = User(self.client, self.uuid)
+
         # TODO save user meta data
         # TODO add user persistent data
         # TODO handle sessions
@@ -19,6 +22,7 @@ class UserSession:
     def add_event(self, event):
         print('User Add event')
         self.events.append(event)
+        self.user.add_event(event)
         if not self.replaced_generic_banner:
             behavior = self.check_behaviour()
             if behavior:
