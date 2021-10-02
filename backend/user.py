@@ -95,7 +95,7 @@ class User:
         record = db.user.find_one({'client': self.client, 'uuid': self.uuid})
         return record
 
-    def _save_user(self):
+    def save_user(self):
         user_obj = {
             'client': self.client,
             'uuid': self.uuid,
@@ -103,9 +103,12 @@ class User:
             'first_visit_dt': self.first_visit_dt,
             'last_visit_dt': self.last_visit_dt,
             'sessions': self.sessions,
+            'events': self.events
         }
         if self.new_user:
             result = mongo_client.uxpera.users.insert_one(user_obj)
+            if result:
+                self.new_user = False
             return result
         else:
             result = mongo_client.uxpera.users.update_one({'client': self.client, 'uuid': self.uuid}, {'$set': user_obj})
@@ -113,6 +116,11 @@ class User:
                 return result.acknowledged and result.matched_count == 1
             except InvalidOperation:
                 return False
+
+    def _get_local_datetime(self):
+        now = datetime.now(timezone.utc)
+        delta = timedelta(hours=self.time_zone_hours, minutes=self.time_zone_mins)
+        return now + delta
 
     def get_events(self):
         return self.events
@@ -130,6 +138,7 @@ class User:
         # TODO confirm session event with Amir
         if event.event_type == 'start' or 'session':
             self.start_event(event.time, event.body)
+            self.sessions += 1
             # TODO save session
         else:
             # other types of events
@@ -137,13 +146,19 @@ class User:
             pass
 
         # TODO handle changes based on event
+        self.last_time = event.time
+
+        # update timers
+        if self.events == 1:
+            self.first_visit_dt = self._get_local_datetime()
+        self.last_visit_dt = self._get_local_datetime()
 
         print('Add event to User')
         print('========')
         print(self)
 
         # save user
-        self._save_user()
+        print('Save User: ', self.save_user())
 
     def start_event(self, time, body):
         self.time = time
@@ -156,9 +171,7 @@ class User:
         self.time_zone_hours = int(whole)
         self.time_zone_mins = int(frac * 60)
 
-        now = datetime.now(timezone.utc)
-        delta = timedelta(hours=self.time_zone_hours, minutes=self.time_zone_mins)
-        self.datetime = now + delta
+        self.datetime = self._get_local_datetime()
 
         # handle agent data
         ua_string = body['agent']

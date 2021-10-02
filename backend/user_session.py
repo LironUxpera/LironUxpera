@@ -25,6 +25,9 @@ class UserSession:
                 self.user.set_behaviour(behaviour)
                 self.replace_generic_banner(behaviour)
 
+        # save updates to user
+        self.user.save_user()
+
     def check_behaviour(self):
         events = self.user.get_events()
         behaviour = self.user.get_behaviour()
