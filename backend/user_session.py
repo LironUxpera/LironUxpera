@@ -26,7 +26,7 @@ class UserSession:
                 self.replace_generic_banner(behaviour)
 
     def check_behaviour(self):
-        events = self.user.events()
+        events = self.user.get_events()
         behaviour = self.user.get_behaviour()
         if not events:
             return behaviour

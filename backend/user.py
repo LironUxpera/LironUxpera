@@ -114,7 +114,7 @@ class User:
             except InvalidOperation:
                 return False
 
-    def events(self):
+    def get_events(self):
         return self.events
 
     def get_behaviour(self):
