@@ -100,10 +100,11 @@ class User:
             'client': self.client,
             'uuid': self.uuid,
             'assumed_behaviour': self.assumed_behaviour,
+            'last_time' : self.last_time,
             'first_visit_dt': self.first_visit_dt,
             'last_visit_dt': self.last_visit_dt,
             'sessions': self.sessions,
-            'events': [e.to_dict() for e in self.events]
+            # 'events': [e.to_dict(full=False) for e in self.events]
         }
         if self.new_user:
             result = mongo_client.uxpera.users.insert_one(user_obj)
@@ -149,7 +150,7 @@ class User:
         self.last_time = event.time
 
         # update timers
-        if self.events == 1:
+        if len(self.events) == 1:
             self.first_visit_dt = self._get_local_datetime()
         self.last_visit_dt = self._get_local_datetime()
 
