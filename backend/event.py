@@ -51,9 +51,7 @@ class Event:
         else:
             print('*** NOT link with title')
 
-    def save_event(self):
-        """save event to mongo"""
-
+    def to_dict(self, full=True):
         event_obj = {
             'client': self.client,
             'uuid': self.uuid,
@@ -61,4 +59,14 @@ class Event:
             'time': self.time,
             'body': self.body,
         }
+        if not full:
+            del event_obj['client']
+            del event_obj['uuid']
+
+        return event_obj
+
+    def save_event(self):
+        """save event to mongo"""
+
+        event_obj = self.to_dict()
         mongo_client.uxpera.events.insert_one(event_obj)

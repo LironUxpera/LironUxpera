@@ -103,7 +103,7 @@ class User:
             'first_visit_dt': self.first_visit_dt,
             'last_visit_dt': self.last_visit_dt,
             'sessions': self.sessions,
-            'events': self.events
+            'events': [e.to_dict() for e in self.events]
         }
         if self.new_user:
             result = mongo_client.uxpera.users.insert_one(user_obj)
