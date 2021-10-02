@@ -157,9 +157,6 @@ class User:
         print('========')
         print(self)
 
-        # save user
-        print('Save User: ', self.save_user())
-
     def start_event(self, time, body):
         self.time = time
         self.ip = body['ip']
