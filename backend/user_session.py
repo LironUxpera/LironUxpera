@@ -12,30 +12,26 @@ class UserSession:
 
         self.user = User(self.client, self.uuid)
 
-        # TODO save user meta data
-        # TODO add user persistent data
         # TODO handle sessions
-        self.assumed_behaviour = ''  # DP,SL, NBS, BH, SB
         self.replaced_generic_banner = False
-        self.events = []
 
     def add_event(self, event):
         print('User Add event')
-        self.events.append(event)
         self.user.add_event(event)
         if not self.replaced_generic_banner:
-            behavior = self.check_behaviour()
-            if behavior:
-                print(f'== Behaviour={behavior}')
-                self.assumed_behaviour = behavior
-                self.replace_generic_banner(behavior)
+            behaviour = self.check_behaviour()
+            if behaviour:
+                print(f'== Behaviour={behaviour}')
+                self.user.set_behaviour(behaviour)
+                self.replace_generic_banner(behaviour)
 
     def check_behaviour(self):
-        behaviour = ''
-        if not self.events:
+        events = self.user.events()
+        behaviour = self.user.get_behaviour()
+        if not events:
             return behaviour
 
-        last_event = self.events[-1]
+        last_event = events[-1]
         last_time = last_event.time
         last_type = last_event.event_type
         print(f'== Checking time={last_time} event={last_type}')
