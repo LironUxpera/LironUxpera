@@ -137,7 +137,7 @@ class User:
         self.events.append(event)
 
         # TODO confirm session event with Amir
-        if event.event_type == 'start' or 'session':
+        if event.event_type == 'start' or event.event_type == 'session':
             self.start_event(event.time, event.body)
             self.sessions += 1
             # TODO save session
