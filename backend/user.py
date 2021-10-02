@@ -233,11 +233,12 @@ class User:
 
         # if this event is longer than new_session_hours_delta, then we need to request to get new session data
         now = self._get_local_datetime()
-        duration = now - self.last_visit_dt
-        duration_in_s = duration.total_seconds()
-        hours = divmod(duration_in_s, 3600)[0]
-        if hours >= self.new_session_hours_delta:
-            command_sender.request_user_session_info()
+        if self.last_visit_dt is not None:
+            duration = now - self.last_visit_dt
+            duration_in_s = duration.total_seconds()
+            hours = divmod(duration_in_s, 3600)[0]
+            if hours >= self.new_session_hours_delta:
+                command_sender.request_user_session_info()
 
         # update timers
         if len(self.events) == 1:
