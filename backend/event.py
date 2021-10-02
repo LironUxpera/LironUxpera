@@ -55,7 +55,7 @@ class Event:
         event_obj = {
             'client': self.client,
             'uuid': self.uuid,
-            'type': self.event_type,
+            'event_type': self.event_type,
             'time': self.time,
             'body': self.body,
         }
@@ -64,6 +64,13 @@ class Event:
             del event_obj['uuid']
 
         return event_obj
+
+    def from_dict(self, client, uuid, event_obj):
+        self.client = client
+        self.uuid = uuid
+        self.event_type = event_obj['event_type']
+        self.time = event_obj['time']
+        self.body = event_obj['body']
 
     def save_event(self):
         """save event to mongo"""

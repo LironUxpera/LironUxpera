@@ -7,15 +7,16 @@ from user_agents import parse
 from pymongo import MongoClient
 from pymongo.errors import InvalidOperation
 
+from event import Event
+from send_command import SendCommand
 
 mongo_client = MongoClient()
-# db = mongo_client.uxpera
-# users = db.user
-# user_sessions = db.userSession
+command_sender = SendCommand()
 
 
 class User:
     def __init__(self, client, uuid):
+        self.new_session_hours_delta = 24  # num of hours between last session to declare a new session started
         self.client = client
         self.uuid = uuid
 
@@ -25,7 +26,6 @@ class User:
         self.first_visit_dt = None  # first visit date
         self.last_visit_dt = None  # last visit date
         self.sessions = 0  # num of sessions
-        self.events = []
 
         # session info
         self.time = 0
@@ -48,6 +48,7 @@ class User:
         self.is_pc = False
         self.is_bot = False
         self.behaviour = ''
+        self.events = []
 
         # check if user exists in mongo and if so read in data
         self.new_user = True
@@ -82,6 +83,14 @@ class User:
             self.is_pc = session['is_pc']
             self.is_bot = session['is_bot']
             self.behaviour = session['behaviour']
+
+            # gets events turning them into Event objects
+            event_objs = session['events']
+            events = []
+            for e in event_objs:
+                event = Event()
+                event.from_dict(self.client, self.uuid, event)
+            self.events = events
 
         print('New User')
         print('========')
@@ -221,6 +230,14 @@ class User:
         self._update_session_events()
 
         self.last_time = event.time
+
+        # if this event is longer than new_session_hours_delta, then we need to request to get new session data
+        now = self._get_local_datetime()
+        duration = now - self.last_visit_dt
+        duration_in_s = duration.total_seconds()
+        hours = divmod(duration_in_s, 3600)[0]
+        if hours >= self.new_session_hours_delta:
+            command_sender.request_user_session_info()
 
         # update timers
         if len(self.events) == 1:
