@@ -9,7 +9,7 @@ from pymongo.errors import InvalidOperation
 
 
 mongo_client = MongoClient()
-db = mongo_client.uxpera
+# db = mongo_client.uxpera
 # users = db.user
 # user_sessions = db.userSession
 
@@ -92,7 +92,7 @@ class User:
         return user_str + '\nSession:\n' + session_str
 
     def _find_user(self):
-        record = db.user.find_one({'client': self.client, 'uuid': self.uuid})
+        record = mongo_client.uxpera.users.find_one({'client': self.client, 'uuid': self.uuid})
         return record
 
     def save_user(self):
