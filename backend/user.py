@@ -59,7 +59,6 @@ class User:
             self.first_visit_dt = record['first_visit_dt']
             self.last_visit_dt = record['last_visit_dt']
             self.sessions = record['sessions']
-            self.events = record['events']
 
         print('New User')
         print('========')
