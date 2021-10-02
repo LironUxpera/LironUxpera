@@ -60,6 +60,29 @@ class User:
             self.last_visit_dt = record['last_visit_dt']
             self.sessions = record['sessions']
 
+            # get latest session
+            session = self._find_latest_session()
+            self.time = session['time']
+            self.ip = session['ip']
+            self.screen_width = session['screen_width']
+            self.screen_height = session['screen_height']
+            self.time_zone_hours = session['time_zone_hours']
+            self.time_zone_mins = session['time_zone_mins']
+            self.datetime = session['datetime']
+            self.browser = session['browser']
+            self.browser_ver = session['browser_ver']
+            self.os = session['os']
+            self.os_ver = session['os_ver']
+            self.device = session['device']
+            self.device_brand = session['device_brand']
+            self.device_model = session['device_model']
+            self.is_mobile = session['is_mobile']
+            self.is_tablet = session['is_tablet']
+            self.is_touch_capable = session['is_touch_capable']
+            self.is_pc = session['is_pc']
+            self.is_bot = session['is_bot']
+            self.behaviour = session['behaviour']
+
         print('New User')
         print('========')
         print(self)
@@ -117,6 +140,56 @@ class User:
             except InvalidOperation:
                 return False
 
+    def _find_latest_session(self):
+        result = None
+        cursor = mongo_client.uxpera.userSessions.find({'client': self.client, 'uuid': self.uuid})
+        for session in cursor:
+            if result is None:
+                result = session
+            else:
+                # take session with largest time) i.e. latest)
+                if session['time'] > result['time']:
+                    result = session
+        return result
+
+    def _save_user_session(self):
+        session_obj = {
+            'client': self.client,
+            'uuid': self.uuid,
+            'time': self.time,
+            'ip': self.ip,
+            'screen_width': self.screen_width,
+            'screen_height': self.screen_height,
+            'time_zone_hours': self.time_zone_hours,
+            'time_zone_mins': self.time_zone_mins,
+            'datetime': self.datetime,
+            'browser': self.browser,
+            'browser_ver': self.browser_ver,
+            'os': self.os,
+            'os_ver': self.os_ver,
+            'device': self.device,
+            'device_brand': self.device_brand,
+            'device_model': self.device_model,
+            'is_mobile': self.is_mobile,
+            'is_tablet': self.is_tablet,
+            'is_touch_capable': self.is_touch_capable,
+            'is_pc': self.is_pc,
+            'is_bot': self.is_bot,
+            'behaviour': self.behaviour,
+        }
+        result = mongo_client.uxpera.userSessions.insert_one(session_obj)
+        return result
+
+    def _update_session_events(self):
+        session_obj = {
+            'events': [e.to_dict(full=False) for e in self.events]
+        }
+        result = mongo_client.uxpera.userSessions.update_one({'client': self.client, 'uuid': self.uuid}, {'$set': session_obj})
+        try:
+            return result.acknowledged and result.matched_count == 1
+        except InvalidOperation:
+            return False
+
     def _get_local_datetime(self):
         now = datetime.now(timezone.utc)
         delta = timedelta(hours=self.time_zone_hours, minutes=self.time_zone_mins)
@@ -139,13 +212,14 @@ class User:
         if event.event_type == 'start' or event.event_type == 'session':
             self.start_event(event.time, event.body)
             self.sessions += 1
-            # TODO save session
+            self._save_user_session()
         else:
-            # other types of events
-            # TODO handle sessions
+            # other types of events - do nothing for now
             pass
 
-        # TODO handle changes based on event
+        # save the changed session events - here so we are sure we have session data
+        self._update_session_events()
+
         self.last_time = event.time
 
         # update timers
