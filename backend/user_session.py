@@ -12,7 +12,7 @@ class UserSession:
 
         self.user = User(self.client, self.uuid)
 
-        # TODO handle sessions
+        # TODO move the next line to be in user sessions data
         self.replaced_generic_banner = False
 
     def add_event(self, event):

@@ -7,6 +7,8 @@ app = Bottle()
 session_mgr = SessionManager()
 
 
+# TODO think of some way to monitor this service, load on memory and mongo, and disk
+
 @app.get("/hello")
 def hello():
     return "Hello World!"

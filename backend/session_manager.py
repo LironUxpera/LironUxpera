@@ -6,12 +6,11 @@ from user_session import UserSession
 
 class SessionManager:
     def __init__(self):
-        self.clients = {}
         self.clients_data = {}
-
-        # TODO we need to think if keep everything in memory all the time or we purge from time to time
-        # TODO now that we save user info persistently. We should  probably clear users who have old sessions
-        # TODO in that case we also need to restore events when we read it back - perhaps unless we are sure it is a new session
+        self.clients = {}  # user_sessions accessed via client key and then uuid key
+        self.user_sessions = []  # same user_sessions as above as FIFO list for memory management
+        self.max_sessions = 2000
+        self.reduce_sessions = 500
 
         # TODO this list should probably be in csv or simply read all folders under client
         # TODO for now we will hard code the list
@@ -36,16 +35,38 @@ class SessionManager:
         # if don't have this client yet then create new entry for it
         if event.client not in self.clients.keys():
             print('SM Add event - CASE 1')
-            self.clients[event.client] = {event.uuid: UserSession(event.client, event.uuid, client_data)}
+            user_session = UserSession(event.client, event.uuid, client_data)
+            self.clients[event.client] = {event.uuid: user_session}
+            self.user_sessions.append(user_session)
 
         client = self.clients[event.client]
 
         # if don't have this uuid yet then create new entry for it
         if event.uuid not in client.keys():
             print('SM Add event - CASE 2')
-            client[event.uuid] = UserSession(event.client, event.uuid, client_data)
+            user_session = UserSession(event.client, event.uuid, client_data)
+            client[event.uuid] = user_session
+            self.user_sessions.append(user_session)
 
         user_session = client[event.uuid]
 
         # add the event to the user session
         user_session.add_event(event)
+
+        # code to limit the number of open sessions
+        if len(self.user_sessions) > self.max_sessions:
+            for _ in range(self.reduce_sessions):
+                user_session = self.user_sessions.pop(0)
+                del self.clients[user_session.client][user_session.uuid]
+
+            # additional code to remove by stale time - 4 hours
+            done_with_stales = False
+            while not done_with_stales and len(self.user_sessions) > 0:
+                user_session = self.user_sessions[0]
+                stale = user_session.user.user_not_accessed_for_x_hours_ago(4)
+                if stale:
+                    user_session = self.user_sessions.pop(0)
+                    del self.clients[user_session.client][user_session.uuid]
+                else:
+                    done_with_stales = True
+

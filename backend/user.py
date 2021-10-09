@@ -139,6 +139,8 @@ class User:
         return record
 
     def save_user(self):
+        # TODO add support for dirty flag / dirty user_object with changesso we save only what is needed and when needed
+
         user_obj = {
             'client': self.client,
             'uuid': self.uuid,
@@ -300,6 +302,16 @@ class User:
         self.is_touch_capable = user_agent.is_touch_capable
         self.is_pc = user_agent.is_pc
         self.is_bot = user_agent.is_bot
+
+    def user_not_accessed_for_x_hours_ago(self, hours):
+        if self.last_visit_dt is None:
+            return False
+
+        now = self._get_local_datetime()
+        duration = now - self.last_visit_dt
+        duration_in_s = duration.total_seconds()
+        hours_diff = divmod(duration_in_s, 3600)[0]
+        return hours_diff >= hours
 
 
 if __name__ == '__main__':
