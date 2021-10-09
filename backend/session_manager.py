@@ -1,4 +1,5 @@
 from demo_client_data import DemoClientData
+from premier_client_data import PremierClientData
 from livia_client_data import LiviaClientData
 from user_session import UserSession
 
@@ -17,8 +18,11 @@ class SessionManager:
         client_data = DemoClientData()
         self.clients_data[client_data.client] = client_data
 
-        client_data = LiviaClientData()
+        client_data = PremierClientData()
         self.clients_data[client_data.client] = client_data
+
+        # client_data = LiviaClientData()
+        # self.clients_data[client_data.client] = client_data
 
     def add_event(self, event):
         if event.client not in self.clients_data.keys():

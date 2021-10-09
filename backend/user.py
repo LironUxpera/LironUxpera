@@ -21,11 +21,15 @@ class User:
         self.uuid = uuid
 
         # global info
-        self.assumed_behaviour = ''  # DP,SL, NBS, BH, SB
         self.last_time = '0'  # last recorded time of event
         self.first_visit_dt = None  # first visit date
         self.last_visit_dt = None  # last visit date
         self.sessions = 0  # num of sessions
+        self.assumed_behaviour = ''  # DP,SL, NBS, BH, SB
+        self.behaviour_changed = False
+        self.behaviour_escalated = False
+        self.bought_anything = False
+        self.bought_last_session = False
 
         # session info
         self.time = 0
@@ -55,11 +59,15 @@ class User:
         record = self._find_user()
         if record:
             self.new_user = False
-            self.assumed_behaviour = record['assumed_behaviour']
             self.last_time = record['last_time']
             self.first_visit_dt = record['first_visit_dt']
             self.last_visit_dt = record['last_visit_dt']
             self.sessions = record['sessions']
+            self.assumed_behaviour = record['assumed_behaviour']
+            self.behaviour_changed = record['behaviour_changed']
+            self.behaviour_escalated = record['behaviour_escalated']
+            self.bought_anything = record['bought_anything']
+            self.bought_last_session = record['bought_last_session']
 
             # get latest session
             session = self._find_latest_session()
@@ -100,10 +108,14 @@ class User:
         user_str = f'Client: {self.client}\n' \
                    f'UUID: {self.uuid}\n' \
                    f'New User: {self.new_user}\n' \
-                   f'Assumed behaviour: {self.assumed_behaviour}\n' \
                    f'First: {self.first_visit_dt}\n' \
                    f'Last: {self.last_visit_dt}\n' \
-                   f'Sessions: {self.sessions}\n'
+                   f'Sessions: {self.sessions}\n' \
+                   f'Assumed behaviour: {self.assumed_behaviour}\n' \
+                   f'Behaviour changed: {self.behaviour_changed}\n' \
+                   f'Behaviour escalated: {self.behaviour_escalated}\n' \
+                   f'Bought anything: {self.bought_anything}\n' \
+                   f'Bought last session: {self.bought_last_session}\n'
 
         session_str = f'Time: {self.time}\n' \
                       f'IP: {self.ip}\n' \
@@ -130,11 +142,16 @@ class User:
         user_obj = {
             'client': self.client,
             'uuid': self.uuid,
-            'assumed_behaviour': self.assumed_behaviour,
             'last_time' : self.last_time,
             'first_visit_dt': self.first_visit_dt,
             'last_visit_dt': self.last_visit_dt,
             'sessions': self.sessions,
+            'assumed_behaviour': self.assumed_behaviour,
+            'behaviour_changed': self.behaviour_changed,
+            'behaviour_escalated': self.behaviour_escalated,
+            'bought_anything': self.bought_anything,
+            'bought_last_session': self.bought_last_session,
+
             # 'events': [e.to_dict(full=False) for e in self.events]
         }
         if self.new_user:
