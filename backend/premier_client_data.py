@@ -8,7 +8,7 @@ from client_data import ClientData
 
 class PremierClientData(ClientData):
     def __init__(self):
-        super().__init__('permier')
+        super().__init__('premier')
 
         # TODO this should probably also be in a csv file
         # TODO update with premier events
