@@ -26,7 +26,7 @@ class PremierStagingClientData(ClientData):
         self.behavior_mapping_df.set_index('behavior', inplace=True)
 
         self.copy_desktop_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy  2 Rows Desktop -Live.xlsx')
-        self.copy_mobile_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy 4 Rows Mobile -Live.csv')
+        self.copy_mobile_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy 4 Rows Mobile -Live.xlsx')
         self.cta_df = pd.read_csv(f'../clients/{self.client}/data/cta-general.csv')
 
     def _load_banners(self):
