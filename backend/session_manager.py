@@ -1,4 +1,5 @@
 from demo_client_data import DemoClientData
+from premier_staging_client_data import PremierStagingClientData
 from premier_client_data import PremierClientData
 from livia_client_data import LiviaClientData
 from user_session import UserSession
@@ -17,7 +18,7 @@ class SessionManager:
         client_data = DemoClientData()
         self.clients_data[client_data.client] = client_data
 
-        client_data = PremierClientData()
+        client_data = PremierStagingClientData()
         self.clients_data[client_data.client] = client_data
 
         # client_data = LiviaClientData()
