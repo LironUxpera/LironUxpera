@@ -165,7 +165,8 @@ class User:
                 self.new_user = False
             return result
         else:
-            result = mongo_client.uxpera.users.update_one({'client': self.client, 'uuid': self.uuid}, {'$set': user_obj})
+            result = mongo_client.uxpera.users.update_one({'client': self.client, 'uuid': self.uuid},
+                                                          {'$set': user_obj})
             try:
                 return result.acknowledged and result.matched_count == 1
             except InvalidOperation:
@@ -216,7 +217,19 @@ class User:
         session_obj = {
             'events': [e.to_dict(full=False) for e in self.events]
         }
-        result = mongo_client.uxpera.userSessions.update_one({'client': self.client, 'uuid': self.uuid}, {'$set': session_obj})
+        result = mongo_client.uxpera.userSessions.update_one({'client': self.client, 'uuid': self.uuid},
+                                                             {'$set': session_obj})
+        try:
+            return result.acknowledged and result.matched_count == 1
+        except InvalidOperation:
+            return False
+
+    def _update_replaced_generic_banner(self):
+        session_obj = {
+            'replaced_generic_banner': self.replaced_generic_banner
+        }
+        result = mongo_client.uxpera.userSessions.update_one({'client': self.client, 'uuid': self.uuid},
+                                                             {'$set': session_obj})
         try:
             return result.acknowledged and result.matched_count == 1
         except InvalidOperation:
@@ -244,11 +257,7 @@ class User:
 
     def set_replaced_generic_banner(self):
         self.replaced_generic_banner = True
-        session_obj = {
-            'replaced_generic_banner': self.replaced_generic_banner
-        }
-        result = mongo_client.uxpera.userSessions.insert_one(session_obj)
-        return result
+        self._update_replaced_generic_banner()
 
     def add_event(self, event):
         # save event
