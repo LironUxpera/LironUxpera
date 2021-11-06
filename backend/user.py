@@ -255,6 +255,8 @@ class User:
         # if this event is longer than new_session_hours_delta, then we need to request to get new session data
         now = self._get_local_datetime()
         if self.last_visit_dt is not None:
+            print(now.tzinfo, self.last_visit_dt.tzinfo)
+            
             duration = now - self.last_visit_dt
             duration_in_s = duration.total_seconds()
             hours = divmod(duration_in_s, 3600)[0]
