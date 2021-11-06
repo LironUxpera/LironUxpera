@@ -23,7 +23,9 @@ def event():
     # parse event
     event_obj = Event()
     event_obj.parse(record)
+    print()
     print(event_obj)
+    print()
 
     # update session manager with event
     session_mgr.add_event(event_obj)

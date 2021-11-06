@@ -97,7 +97,7 @@ class User:
             events = []
             for e in event_objs:
                 event = Event()
-                event.from_dict(self.client, self.uuid, event)
+                event.from_dict(self.client, self.uuid, e)
             self.events = events
 
         print('New User')
@@ -139,7 +139,7 @@ class User:
         return record
 
     def save_user(self):
-        # TODO add support for dirty flag / dirty user_object with changesso we save only what is needed and when needed
+        # TODO add support for dirty flag / user_object with changes so we save only what is needed and when needed
 
         user_obj = {
             'client': self.client,
