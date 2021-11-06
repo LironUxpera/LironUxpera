@@ -244,6 +244,11 @@ class User:
 
     def set_replaced_generic_banner(self):
         self.replaced_generic_banner = True
+        session_obj = {
+            'replaced_generic_banner': self.replaced_generic_banner
+        }
+        result = mongo_client.uxpera.userSessions.insert_one(session_obj)
+        return result
 
     def add_event(self, event):
         # save event
