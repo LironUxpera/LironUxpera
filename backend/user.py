@@ -61,9 +61,9 @@ class User:
             self.new_user = False
             self.last_time = record['last_time']
             self.first_visit_dt = record['first_visit_dt']
-            self.first_visit_dt.replace(tzinfo=timezone.utc)
+            # self.first_visit_dt.replace(tzinfo=timezone.utc)
             self.last_visit_dt = record['last_visit_dt']
-            self.first_visit_dt.replace(tzinfo=timezone.utc)
+            # self.first_visit_dt.replace(tzinfo=timezone.utc)
             self.sessions = record['sessions']
             self.assumed_behaviour = record['assumed_behaviour']
             self.behaviour_changed = record['behaviour_changed']
@@ -221,7 +221,7 @@ class User:
             return False
 
     def _get_local_datetime(self):
-        now = datetime.now(timezone.utc)
+        now = datetime.now()
         delta = timedelta(hours=self.time_zone_hours, minutes=self.time_zone_mins)
         return now + delta
 
