@@ -28,5 +28,26 @@ class ClientData:
     def _load_banners(self):
         pass
 
+    def check_behaviour(self, last_time, last_type):
+        behaviour = None
+
+        # left check for events in first 5 seconds
+        if last_time <= 5000:
+            if last_type in self.dp_events:
+                behaviour = 'DP'
+            elif last_type in self.bh_events:
+                behaviour = 'BH'
+            elif last_type in self.nb_events:
+                behaviour = 'NBS'
+            elif last_type in self.sl_events:
+                behaviour = 'SL'
+            elif last_type in self.sb_events:
+                behaviour = 'SB'
+        elif last_time <= 15000:
+            if last_type in self.sb_events:
+                behaviour = 'SB'
+
+        return behaviour
+
     def calc_banner(self, assumed_behaviour):
         return None

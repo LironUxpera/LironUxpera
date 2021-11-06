@@ -52,6 +52,7 @@ class User:
         self.is_pc = False
         self.is_bot = False
         self.behaviour = ''
+        self.replaced_generic_banner = False
         self.events = []
 
         # check if user exists in mongo and if so read in data
@@ -91,6 +92,7 @@ class User:
             self.is_pc = session['is_pc']
             self.is_bot = session['is_bot']
             self.behaviour = session['behaviour']
+            self.replaced_generic_banner = session['replaced_generic_banner']
 
             # gets events turning them into Event objects
             event_objs = session['events']
@@ -130,7 +132,8 @@ class User:
                       f'Touch: {self.is_touch_capable}\n' \
                       f'PC: {self.is_pc}\n' \
                       f'Bot: {self.is_bot}\n' \
-                      f'Behavior: {self.behaviour}\n'
+                      f'Behavior: {self.behaviour}\n' \
+                      f'Replaced Generic banner: {self.replaced_generic_banner}\n'
 
         return user_str + '\nSession:\n' + session_str
 
@@ -204,6 +207,7 @@ class User:
             'is_pc': self.is_pc,
             'is_bot': self.is_bot,
             'behaviour': self.behaviour,
+            'replaced_generic_banner': self.replaced_generic_banner
         }
         result = mongo_client.uxpera.userSessions.insert_one(session_obj)
         return result
@@ -223,6 +227,9 @@ class User:
         delta = timedelta(hours=self.time_zone_hours, minutes=self.time_zone_mins)
         return now + delta
 
+    def get_session_start_time(self):
+        return self.time
+
     def get_events(self):
         return self.events
 
@@ -231,6 +238,12 @@ class User:
 
     def set_behaviour(self, behaviour):
         self.assumed_behaviour = behaviour
+
+    def get_replaced_generic_banner(self):
+        return self.replaced_generic_banner
+
+    def set_replaced_generic_banner(self):
+        self.replaced_generic_banner = True
 
     def add_event(self, event):
         # save event
