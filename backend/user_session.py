@@ -29,11 +29,14 @@ class UserSession:
         print('Save User: ', self.user.save_user())
 
     def check_behaviour(self):
+        print('$$$$$')
+        print('Checking behaviour 1')
         events = self.user.get_events()
         behaviour = self.user.get_behaviour()
         if not events:
             return behaviour
 
+        print('Checking behaviour 2')
         last_event = events[-1]
         last_time = last_event.time
         last_type = last_event.event_type
