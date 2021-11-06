@@ -16,7 +16,7 @@ class UserSession:
         self.replaced_generic_banner = False
 
     def add_event(self, event):
-        print('User Add event')
+        print('UserSession Add event')
         self.user.add_event(event)
         if not self.replaced_generic_banner:
             behaviour = self.check_behaviour()

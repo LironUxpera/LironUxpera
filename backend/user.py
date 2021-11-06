@@ -61,9 +61,7 @@ class User:
             self.new_user = False
             self.last_time = record['last_time']
             self.first_visit_dt = record['first_visit_dt']
-            # self.first_visit_dt.replace(tzinfo=timezone.utc)
             self.last_visit_dt = record['last_visit_dt']
-            # self.first_visit_dt.replace(tzinfo=timezone.utc)
             self.sessions = record['sessions']
             self.assumed_behaviour = record['assumed_behaviour']
             self.behaviour_changed = record['behaviour_changed']
@@ -255,8 +253,6 @@ class User:
         # if this event is longer than new_session_hours_delta, then we need to request to get new session data
         now = self._get_local_datetime()
         if self.last_visit_dt is not None:
-            print(now.tzinfo, self.last_visit_dt.tzinfo)
-            
             duration = now - self.last_visit_dt
             duration_in_s = duration.total_seconds()
             hours = divmod(duration_in_s, 3600)[0]
@@ -268,9 +264,9 @@ class User:
             self.first_visit_dt = self._get_local_datetime()
         self.last_visit_dt = self._get_local_datetime()
 
-        print('Add event to User')
+        print('Done adding event to User')
         print('========')
-        print(self)
+        # print(self)
 
     def start_event(self, time, body):
         self.time = time
