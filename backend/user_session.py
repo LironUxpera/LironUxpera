@@ -16,36 +16,14 @@ class UserSession:
         print('UserSession Add event')
         self.user.add_event(event)
         if not self.user.get_replaced_generic_banner():
-            behaviour = self.check_behaviour()
-            if behaviour:
-                print(f'== Behaviour={behaviour}')
+            behaviour = self.client_data.check_behaviour(self.user)
+            if behaviour is not None:
+                print(f'== Calculated Behaviour = {behaviour}')
                 self.user.set_behaviour(behaviour)
                 self.replace_generic_banner(behaviour)
 
         # save updates to user
         print('Save User: ', self.user.save_user())
-
-    def check_behaviour(self):
-        print('$$$$$')
-        print('Checking behaviour 1')
-        session_start_time = self.user.get_session_start_time()
-        events = self.user.get_events()
-        behaviour = self.user.get_behaviour()
-        if not events:
-            return behaviour
-
-        print('Checking behaviour 2')
-        last_event = events[-1]
-        last_time = last_event.time - session_start_time
-        last_type = last_event.event_type
-        print(f'== Checking time={last_time} event={last_type}')
-
-        calculated_behavior = self.client_data.check_behaviour(last_time, last_type)
-
-        if calculated_behavior is not None:
-            behaviour = calculated_behavior
-
-        return behaviour
 
     def replace_generic_banner(self, assumed_behaviour):
         html = self.client_data.calc_banner(assumed_behaviour)

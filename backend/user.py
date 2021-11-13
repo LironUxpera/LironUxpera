@@ -52,6 +52,8 @@ class User:
         self.is_pc = False
         self.is_bot = False
         self.behaviour = ''
+        self.contradicted_behaviour = None  # not saved - used to check last events contradict previous behaviour
+        self.no_time_limit_mode = False
         self.replaced_generic_banner = False
         self.events = []
 
@@ -92,6 +94,7 @@ class User:
             self.is_pc = session['is_pc']
             self.is_bot = session['is_bot']
             self.behaviour = session['behaviour']
+            self.no_time_limit_mode = session['no_time_limit_mode']
             self.replaced_generic_banner = session['replaced_generic_banner']
 
             # gets events turning them into Event objects
@@ -132,7 +135,8 @@ class User:
                       f'Touch: {self.is_touch_capable}\n' \
                       f'PC: {self.is_pc}\n' \
                       f'Bot: {self.is_bot}\n' \
-                      f'Behavior: {self.behaviour}\n' \
+                      f'Behavior: {self.behaviour}\n' \ 
+                      f'No time limit mode: {self.no_time_limit_mode}\n' \
                       f'Replaced Generic banner: {self.replaced_generic_banner}\n'
 
         return user_str + '\nSession:\n' + session_str
@@ -208,6 +212,7 @@ class User:
             'is_pc': self.is_pc,
             'is_bot': self.is_bot,
             'behaviour': self.behaviour,
+            'no_time_limit_mode': self.no_time_limit_mode,
             'replaced_generic_banner': self.replaced_generic_banner
         }
         result = mongo_client.uxpera.userSessions.insert_one(session_obj)
@@ -240,8 +245,23 @@ class User:
         delta = timedelta(hours=self.time_zone_hours, minutes=self.time_zone_mins)
         return now + delta
 
+    def get_ssession_num(self):
+        return self.sessions
+
+    def set_behaviour_changed(self):
+        self.behaviour_changed = True
+
+    def set_behaviour_escalated(self):
+        self.behaviour_escalated = True
+
     def get_session_start_time(self):
         return self.time
+
+    def get_bought_last_session(self):
+        return self.bought_last_session
+
+    def get_bought_anything(self):
+        return self.bought_anything
 
     def get_events(self):
         return self.events
@@ -251,6 +271,18 @@ class User:
 
     def set_behaviour(self, behaviour):
         self.assumed_behaviour = behaviour
+
+    def get_contradicted_behaviour(self):
+        return self.contradicted_behaviour
+
+    def set_contradicted_behaviour(self, behaviour):
+        self.contradicted_behaviour = behaviour
+
+    def get_no_time_limit_mode(self):
+        return self.no_time_limit_mode
+
+    def set_no_time_limit_mode(self):
+        self.no_time_limit_mode = True
 
     def get_replaced_generic_banner(self):
         return self.replaced_generic_banner
