@@ -125,6 +125,7 @@ class PremierStagingClientData(ClientData):
         result = event.event_type
 
         if result == 'click' and event.body is not None and 'link' in event.body:
+            print(f'^^^ Testing click event link')
             link = event.body['link']
             link = link.split('/')[-1]
             match = self._match_link(link)
@@ -132,6 +133,7 @@ class PremierStagingClientData(ClientData):
                 print(f'^^^ Mapped click event to {match}')
                 return match
         if result == 'click' and event.body is not None and 'link' in event.body:
+            print(f'^^^ Testing click event link category')
             link = event.body['link']
             link_parts = link.split('/')
             match = self._match_link_category(link_parts)
@@ -139,12 +141,14 @@ class PremierStagingClientData(ClientData):
                 print(f'^^^ Mapped click event to {match}')
                 return match
         elif result == 'button' and event.body is not None and 'data' in event.body:
+            print(f'^^^ Testing button event data')
             data_str = event.body['data']
             match = self._match_data(data_str)
             if match is not None:
                 print(f'^^^ Mapped button event to {match}')
                 return match
         elif result == 'button' and event.body is not None and 'title' in event.body:
+            print(f'^^^ Testing button event title')
             title = event.body['title']
             match = self._match_title(title)
             if match is not None:
