@@ -135,7 +135,7 @@ class User:
                       f'Touch: {self.is_touch_capable}\n' \
                       f'PC: {self.is_pc}\n' \
                       f'Bot: {self.is_bot}\n' \
-                      f'Behavior: {self.behaviour}\n' \ 
+                      f'Behavior: {self.behaviour}\n' \
                       f'No time limit mode: {self.no_time_limit_mode}\n' \
                       f'Replaced Generic banner: {self.replaced_generic_banner}\n'
 
