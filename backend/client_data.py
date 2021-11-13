@@ -39,6 +39,7 @@ class ClientData:
         pass
 
     def _get_canonical_event_type(self, event):
+        print('BASE _get_canonical_event_type')
         return event.event_type
 
     def _check_plain_behaviour(self, last_type):
