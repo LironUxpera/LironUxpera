@@ -88,7 +88,7 @@ class ClientData:
                     print(f'== Long time event')
                     behaviour = 'SB'
 
-            if last_time <= 10000:
+            if last_time <= 11000:
                 if last_type in self.medium_time_events:
                     print(f'== Medium time event')
                     behaviour = 'SB'
@@ -135,10 +135,6 @@ class ClientData:
                 user.set_behaviour_changed()
                 user.set_behaviour_escalated()
                 behaviour = 'SB'
-
-
-
-
 
         return behaviour
 
