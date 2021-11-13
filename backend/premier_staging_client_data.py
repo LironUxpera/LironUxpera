@@ -122,10 +122,12 @@ class PremierStagingClientData(ClientData):
         }.get(title, None)  # None is default if title is not found
 
     def _get_canonical_event_type(self, event):
-        print('OVERRIDEN _get_canonical_event_type')
-        
         result = event.event_type
 
+        print(result == 'click')
+        print(event.body is not None)
+        print('link' in event.body)
+        print(event.body)
         if result == 'click' and event.body is not None and 'link' in event.body:
             print(f'^^^ Testing click event link')
             link = event.body['link']
