@@ -129,20 +129,20 @@ class PremierStagingClientData(ClientData):
         # print('link' in event.body)
         # print(event.body)
         if result == 'link' and event.body is not None and 'link' in event.body:
-            print(f'^^^ Testing click event link')
+            print(f'^^^ Testing link event link')
             link = event.body['link']
             link = link.split('/')[-1]
             match = self._match_link(link)
             if match is not None:
-                print(f'^^^ Mapped click event to {match}')
+                print(f'^^^ Mapped link event to {match}')
                 return match
         if result == 'link' and event.body is not None and 'link' in event.body:
-            print(f'^^^ Testing click event link category')
+            print(f'^^^ Testing link event link category')
             link = event.body['link']
             link_parts = link.split('/')
             match = self._match_link_category(link_parts)
             if match is not None:
-                print(f'^^^ Mapped click event to {match}')
+                print(f'^^^ Mapped link event to {match}')
                 return match
         elif result == 'button' and event.body is not None and 'data' in event.body:
             print(f'^^^ Testing button event data')
