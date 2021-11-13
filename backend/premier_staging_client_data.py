@@ -124,11 +124,11 @@ class PremierStagingClientData(ClientData):
     def _get_canonical_event_type(self, event):
         result = event.event_type
 
-        print(result == 'click')
-        print(event.body is not None)
-        print('link' in event.body)
-        print(event.body)
-        if result == 'click' and event.body is not None and 'link' in event.body:
+        # print(result == 'link')
+        # print(event.body is not None)
+        # print('link' in event.body)
+        # print(event.body)
+        if result == 'link' and event.body is not None and 'link' in event.body:
             print(f'^^^ Testing click event link')
             link = event.body['link']
             link = link.split('/')[-1]
@@ -136,7 +136,7 @@ class PremierStagingClientData(ClientData):
             if match is not None:
                 print(f'^^^ Mapped click event to {match}')
                 return match
-        if result == 'click' and event.body is not None and 'link' in event.body:
+        if result == 'link' and event.body is not None and 'link' in event.body:
             print(f'^^^ Testing click event link category')
             link = event.body['link']
             link_parts = link.split('/')
