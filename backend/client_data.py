@@ -85,14 +85,16 @@ class ClientData:
 
             if last_time <= 15000:
                 if last_type in self.long_time_events:
+                    print(f'== Long time event')
                     behaviour = 'SB'
 
             if last_time <= 10000:
                 if last_type in self.medium_time_events:
+                    print(f'== Medium time event')
                     behaviour = 'SB'
 
             # left check for events in first 5 seconds
-            if last_time <= 5000 :
+            if last_time <= 5000:
                 if last_type in self.dp_events:
                     behaviour = 'DP'
                 elif last_type in self.bh_events:
@@ -107,6 +109,7 @@ class ClientData:
         else:
             # 2 or more sessions
             if current_assumed_behavior == 'DP' and not user.get_bought_last_session():
+                print(f'== 2 or more sessions - Case 1')
                 user.set_behaviour_changed()
                 user.set_behaviour_escalated()
                 behaviour = 'NBS'
@@ -116,16 +119,19 @@ class ClientData:
                     # if first event after start is a contradiction then remember it
                     user.set_contradicted_behaviour(plain_behaviour)
                 elif user.get_contradicted_behaviour() is not None and len(events) == 3:
+                    print(f'== 2 or more sessions - Case 2')
                     # if 2 first events are a contradiction then use the first one
                     user.set_behaviour_changed()
                     user.set_behaviour_escalated()
                     behaviour = user.get_contradicted_behaviour()
             elif sessions >= 3 and (current_assumed_behavior == 'SL' or current_assumed_behavior == 'BH') \
                     and not user.get_bought_anything():
+                print(f'== 2 or more sessions - Case 3')
                 user.set_behaviour_changed()
                 user.set_behaviour_escalated()
                 behaviour = 'NBS'
             elif sessions == 4 and current_assumed_behavior == 'NBS' and not user.get_bought_anything():
+                print(f'== 2 or more sessions - Case 3')
                 user.set_behaviour_changed()
                 user.set_behaviour_escalated()
                 behaviour = 'SB'
