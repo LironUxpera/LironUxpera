@@ -12,7 +12,7 @@ class Event:
         self.client = ''
         self.uuid = ''
         self.event_type = ''
-        self.page = ''
+        # self.page = ''
         self.time = 0
         self.body = None
 
@@ -20,16 +20,16 @@ class Event:
         return f'Client: {self.client}\n' \
                f'UUID: {self.uuid}\n' \
                f'Type: {self.event_type}\n' \
-               f'Page: {self.page}\n' \
                f'Time: {self.time}\n' \
                f'Body: {self.body}\n'
+                # f'Page: {self.page}\n' \
 
     def parse(self, msg_record):
-        print(msg_record)
+        # print(msg_record)
         self.client = msg_record["messageAttributes"]["Client"]["stringValue"]
         self.uuid = msg_record["messageAttributes"]["UUID"]["stringValue"]
         self.event_type = msg_record["messageAttributes"]["Type"]["stringValue"]
-        self.page = msg_record["messageAttributes"]["Page"]["stringValue"]
+        # self.page = msg_record["messageAttributes"]["Page"]["stringValue"]
         self.time = int(msg_record["messageAttributes"]["Time"]["stringValue"])
         self.body = json.loads(msg_record["body"])
 
@@ -60,7 +60,7 @@ class Event:
             'client': self.client,
             'uuid': self.uuid,
             'event_type': self.event_type,
-            'page': self.page,
+            # 'page': self.page,
             'time': self.time,
             'body': self.body,
         }
@@ -74,7 +74,7 @@ class Event:
         self.client = client
         self.uuid = uuid
         self.event_type = event_obj['event_type']
-        self.page = event_obj['page']
+        # self.page = event_obj['page']
         self.time = event_obj['time']
         self.body = event_obj['body']
 
