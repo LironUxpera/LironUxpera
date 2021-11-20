@@ -83,18 +83,18 @@ class ClientData:
                 user.set_no_time_limit_mode()
                 return
 
+            if last_time <= 21000:
+                if last_type in self.medium_time_events:
+                    print(f'== Medium time event')
+                    behaviour = 'SB'
+
             if last_time <= 15000:
                 if last_type in self.long_time_events:
                     print(f'== Long time event')
                     behaviour = 'SB'
 
-            if last_time <= 11000:
-                if last_type in self.medium_time_events:
-                    print(f'== Medium time event')
-                    behaviour = 'SB'
-
             # left check for events in first 5 seconds
-            if last_time <= 5000:
+            if last_time <= 10000:
                 if last_type in self.dp_events:
                     behaviour = 'DP'
                 elif last_type in self.bh_events:

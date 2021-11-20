@@ -12,7 +12,7 @@ class PremierStagingClientData(ClientData):
 
         # TODO this should probably also be in a csv file
 
-        self.dp_events = ['went_to_featured_products', 'went_to_category', 'search']
+        self.dp_events = ['went_to_featured_products', 'went_to_category', 'search', 'went_to_searchbar']
         self.bh_events = ['went_to_product_weekly_specials']
         self.nb_events = ['went_to_premier_world', 'went_to_free_samples']
         self.sl_events = ['went_to_gifts', 'went_to_best_sellers', 'went_to_blog', 'went_to_product_top_picks']
@@ -96,7 +96,7 @@ class PremierStagingClientData(ClientData):
 
     @staticmethod
     def _match_link_category(link_parts):
-        if ' classic-skincare' in link_parts:
+        if 'classic-skincare' in link_parts:
             return 'went_to_category'
         elif 'prestige-skincare' in link_parts:
             return 'went_to_category'
@@ -118,6 +118,7 @@ class PremierStagingClientData(ClientData):
     @staticmethod
     def _match_title(title):
         return {
+            'search-button': 'went_to_searchbar',
             'Social media': 'went_to_media',
         }.get(title, None)  # None is default if title is not found
 
