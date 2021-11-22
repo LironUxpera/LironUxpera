@@ -15,7 +15,10 @@ class SessionManager:
 
         # TODO this list should probably be in csv or simply read all folders under client
         # TODO for now we will hard code the list
-        client_data = DemoClientData()
+        # client_data = DemoClientData()
+        # self.clients_data[client_data.client] = client_data
+
+        client_data = PremierClientData()
         self.clients_data[client_data.client] = client_data
 
         client_data = PremierStagingClientData()
