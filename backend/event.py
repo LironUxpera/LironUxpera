@@ -25,7 +25,7 @@ class Event:
                f'Body: {self.body}\n'
 
     def parse(self, msg_record):
-        print(msg_record)
+        # print(msg_record)
         self.client = msg_record["messageAttributes"]["Client"]["stringValue"]
         self.uuid = msg_record["messageAttributes"]["UUID"]["stringValue"]
         self.event_type = msg_record["messageAttributes"]["Type"]["stringValue"]
