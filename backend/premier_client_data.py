@@ -25,9 +25,8 @@ class PremierClientData(ClientData):
         # self.sb_events = ['reviews', 'timeout', 'terms_and_cond', 'security_and_priv', 'about_us', 'browsing_no_click',
         #                   'Scrolling_To_Second_Part', 'scrolling_to_third']
 
-        self.long_time_events = ['went_to_terms_and_conditions', 'went_to_security_and_privacy', 'went_to_about_us',
-                                 'Scrolling_To_Second_Part']
-        self.medium_time_events = ['timeout']
+        self.long_time_events = ['went_to_terms_and_conditions', 'went_to_security_and_privacy', 'went_to_about_us']
+        self.timeout_and_scroll_events = ['timeout', 'Scrolling_To_Second_Part']
         self.no_time_limit_events = ['went_to_affiliates', 'went_to_distributors', 'went_to_awards', 'went_to_contact',
                                      'went_to_media', 'went_to_account']
 

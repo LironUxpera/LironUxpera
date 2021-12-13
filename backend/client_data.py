@@ -16,7 +16,7 @@ class ClientData:
         #                   'Scrolling_To_Second_Part', 'scrolling_to_third']
 
         self.long_time_events = []
-        self.medium_time_events = []
+        self.timeout_and_scroll_events = []
         self.no_time_limit_events = []
 
         # load the behavior mapping, copy & cta tables
@@ -50,8 +50,10 @@ class ClientData:
             return 'NBS'
         elif last_type in self.sl_events:
             return 'SL'
-        elif last_type in self.sb_events or last_type in self.long_time_events or last_type in self.medium_time_events:
+        elif last_type in self.sb_events or last_type in self.long_time_events:
             return 'SB'
+        elif last_type in self.timeout_and_scroll_events:
+            return 'UN'
 
     def check_behaviour(self, user):
         """this method not only checks the behaviour based on rules but also has side effects on User"""
@@ -84,9 +86,9 @@ class ClientData:
                 return
 
             if last_time <= 21000:
-                if last_type in self.medium_time_events:
-                    print(f'== Medium time event')
-                    behaviour = 'SB'
+                if last_type in self.timeout_and_scroll_events:
+                    print(f'== timeout or scroll event')
+                    behaviour = 'UN'
 
             if last_time <= 15000:
                 if last_type in self.long_time_events:
