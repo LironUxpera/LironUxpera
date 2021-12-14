@@ -213,13 +213,14 @@ class PremierStagingClientData(ClientData):
         html_id.replace_with(new_soup)
 
         # replace user name
-        html_id = html.find(id='n____John_B')
-        new = f'<div id="n____John_B">' \
-              f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
-              f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
-              f'</div>'
-        new_soup = BeautifulSoup(new)
-        html_id.replace_with(new_soup)
+        # TODO harry cannot find by this ID for some reason
+        # html_id = html.find(id='n____John_B')
+        # new = f'<div id="n____John_B">' \
+        #       f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
+        #       f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
+        #       f'</div>'
+        # new_soup = BeautifulSoup(new)
+        # html_id.replace_with(new_soup)
 
         # replace cta
         html_id = html.find(id='TAKE_THE_NEXT_SETP')

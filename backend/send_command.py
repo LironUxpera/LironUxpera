@@ -36,23 +36,29 @@ class SendCommand:
         return result
 
     def push_banner_to_user(self, client, uuid, banner_html):
-        cursor = self.connection.cursor()
+        try:
+            cursor = self.connection.cursor()
 
-        # Create a new record
-        sql = "INSERT INTO responder (client_id, user_uuid, response_type, html, configuration) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(sql, (client, uuid, 'banner', banner_html, json.dumps({})))
+            # Create a new record
+            sql = "INSERT INTO responder (client_id, user_uuid, response_type, html, configuration) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(sql, (client, uuid, 'banner', banner_html, json.dumps({})))
 
-        # connection is not autocommit by default. So you must commit to save
-        # your changes.
-        self.connection.commit()
+            # connection is not autocommit by default. So you must commit to save
+            # your changes.
+            self.connection.commit()
+        except:
+            self.connection.rollback()
 
     def request_user_session_info(self, client, uuid):
-        cursor = self.connection.cursor()
+        try:
+            cursor = self.connection.cursor()
 
-        # Create a new record
-        sql = "INSERT INTO responder (client_id, user_uuid, response_type, html, configuration) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(sql, (client, uuid, 'session', '', json.dumps({})))
+            # Create a new record
+            sql = "INSERT INTO responder (client_id, user_uuid, response_type, html, configuration) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(sql, (client, uuid, 'session', '', json.dumps({})))
 
-        # connection is not autocommit by default. So you must commit to save
-        # your changes.
-        self.connection.commit()
+            # connection is not autocommit by default. So you must commit to save
+            # your changes.
+            self.connection.commit()
+        except:
+            self.connection.rollback()
