@@ -200,7 +200,7 @@ class PremierStagingClientData(ClientData):
         user_name = 'Harry H'
 
         html = self.desktop_pp_testimonial_banner
-        
+
         print('Testimonial banner', assumed_behaviour)
         print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 

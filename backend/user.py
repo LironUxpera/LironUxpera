@@ -316,7 +316,7 @@ class User:
             duration_in_s = duration.total_seconds()
             hours = divmod(duration_in_s, 3600)[0]
             if hours >= self.new_session_hours_delta:
-                command_sender.request_user_session_info()
+                command_sender.request_user_session_info(self.client, self.uuid)
 
         # update timers
         if len(self.events) == 1:
