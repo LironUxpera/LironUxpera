@@ -41,16 +41,28 @@ class PremierStagingClientData(ClientData):
         self.cta_df = pd.read_csv(f'../clients/{self.client}/data/cta-general.csv')
 
     def _load_banners(self):
-        return
+        # home page
+        with open(f'../clients/{self.client}/banners/Behaviour-Desktop-1920x650-R.html', 'rt') as file:
+            self.desktop_hp_testimonial_banner = BeautifulSoup(file.read(), features="html.parser")
+        with open(f'../clients/{self.client}/banners/Behaviour-Desktop-1920x650.html', 'rt') as file:
+            self.desktop_hp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
+        with open(f'../clients/{self.client}/banners/Behaviour-Mobile-6600x770_R.html', 'rt') as file:
+            self.mobile_hp_testimonial_banner = BeautifulSoup(file.read(), features="html.parser")
+        with open(f'../clients/{self.client}/banners/Behaviour-Mobile-6600x770.html', 'rt') as file:
+            self.mobile_hp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
 
-        # with open(f'../clients/{self.client}/banners/desktop_1000x100_promotional.html', 'rt') as file:
-        #     self.desktop_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
-        # with open(f'../clients/{self.client}/banners/desktop_1000x100_review.html', 'rt') as file:
-        #     self.desktop_review_banner = BeautifulSoup(file.read(), features="html.parser")
-        # with open(f'../clients/{self.client}/banners/android_720_X150_promotional.html', 'rt') as file:
-        #     self.mobile_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
-        # with open(f'../clients/{self.client}/banners/android_720_review.html', 'rt') as file:
-        #     self.mobile_review_banner = BeautifulSoup(file.read(), features="html.parser")
+        # product page
+        with open(f'../clients/{self.client}/banners/Behaviour-Desktop-192x112-R.html', 'rt') as file:
+            self.desktop_pp_testimonial_banner = BeautifulSoup(file.read(), features="html.parser")
+        with open(f'../clients/{self.client}/banners/Behaviour-Desktop-192x112.html', 'rt') as file:
+            self.desktop_pp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
+        with open(f'../clients/{self.client}/banners/Behaviour-Mobile-400x62.html', 'rt') as file:
+            self.mobile_hp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
+
+        # checkout page
+        self.desktop_cp_testimonial_banner = self.desktop_pp_testimonial_banner
+        self.desktop_cp_promotional_banner = self.desktop_pp_promotional_banner
+        self.mobile_cp_promotional_banner = self.mobile_hp_promotional_banner
 
     @staticmethod
     def _match_link(link):
@@ -162,67 +174,63 @@ class PremierStagingClientData(ClientData):
         return result
 
     def calc_banner(self, assumed_behaviour):
-        return ''
+        # copy = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['copy'])
+        # copy = int(copy)
+        # cta = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['cta'])
+        # cta = int(cta)
+        # print(f'behaviour={assumed_behaviour} copy={copy} cta={cta}')
+        #
+        # # check if to use promotional or review banner
+        # if copy % 100 == 6 or copy % 100 == 7:
+        #     promotional = True
+        #     html = self.desktop_promotional_banner
+        # else:
+        #     promotional = False
+        #     html = self.desktop_review_banner
+        #
+        # copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
+        # copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
+        # if type(copy_text2) == float and math.isnan(copy_text2):
+        #     copy_text2 = ''
+        # cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
 
-        copy = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['copy'])
-        copy = int(copy)
-        cta = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['cta'])
-        cta = int(cta)
-        print(f'behaviour={assumed_behaviour} copy={copy} cta={cta}')
+        copy_text1 = 'Copy text 1 ' + assumed_behaviour
+        copy_text2 = 'Copy text 2 ' + assumed_behaviour
+        cta_text = 'Call to action ' + assumed_behaviour
+        user_name = 'Harry H'
 
-        # check if to use promotional or review banner
-        if copy % 100 == 6 or copy % 100 == 7:
-            promotional = True
-            html = self.desktop_promotional_banner
-        else:
-            promotional = False
-            html = self.desktop_review_banner
+        html = self.desktop_pp_testimonial_banner
+        
+        print('Testimonial banner', assumed_behaviour)
+        print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
-        copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
-        copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
-        if type(copy_text2) == float and math.isnan(copy_text2):
-            copy_text2 = ''
-        cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
-        if promotional:
-            print('Promotional banner')
-            print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
+        # replace text
+        html_id = html.find(id='My_bath_time_is_never_complete')
+        new = f'<div id="My_bath_time_is_never_complete">' \
+              f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
 
-            # replace text1
-            html_id = html.find(id='ID33_OFF_ON_SUMMER_SALE_br')
-            new = f'<div id="ID33_OFF_ON_SUMMER_SALE_br"><span>{copy_text1}</span></div>'
-            new_soup = BeautifulSoup(new)
-            html_id.replace_with(new_soup)
+        # replace user name
+        html_id = html.find(id='n____John_B')
+        new = f'<div id="n____John_B">' \
+              f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
+              f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
 
-            # replace text2
-            html_id = html.find(id='AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq')
-            new = f'<div id="AND_EXTRA_REPLACEBLE_LIVIA_SKI_bq"><span>{copy_text2}</span></div>'
-            new_soup = BeautifulSoup(new)
-            html_id.replace_with(new_soup)
+        # replace cta
+        html_id = html.find(id='TAKE_THE_NEXT_SETP')
+        new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
 
-            # replace cta
-            html_id = html.find(id='SEE_PLANS_AND_PRICING')
-            new = f'<div id="SEE_PLANS_AND_PRICING"><span>{cta_text}</span></div>'
-            new_soup = BeautifulSoup(new)
-            html_id.replace_with(new_soup)
-
-        else:
-            ref_text = self.copy_df[self.copy_df.id == copy].iloc[0]['ref']
-            if type(ref_text) == float and math.isnan(ref_text):
-                ref_text = ''
-            print('Review banner')
-            print(f'copy_text="{copy_text1} {copy_text2}" ref_text="{ref_text}" cta_text="{cta_text}"')
-
-            # replace text1 & ref
-            html_id = html.find(id='Livia_has_been_incredible_for_')
-            new = f'<div id="Livia_has_been_incredible_for_"><span style="text-transform:uppercase;">{copy_text1} {copy_text2}</span>' \
-                  f'<br><span style="font-family:Source Sans Pro;font-style:normal;font-weight:bold;font-size:20px;color:rgba(246,105,135,1);text-transform:uppercase;">{ref_text}</span></div>'
-            new_soup = BeautifulSoup(new)
-            html_id.replace_with(new_soup)
-
-            # replace cta
-            html_id = html.find(id='SEE_PLANS__PRICING')
-            new = f'<div id="SEE_PLANS__PRICING"><span>{cta_text}</span></div>'
-            new_soup = BeautifulSoup(new)
-            html_id.replace_with(new_soup)
+        # replace product name
+        html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
+        new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
 
         return html

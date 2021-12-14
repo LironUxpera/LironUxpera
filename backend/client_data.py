@@ -26,10 +26,19 @@ class ClientData:
         self._load_data_tables()
 
         # load the client banners
-        self.desktop_promotional_banner = ''
-        self.desktop_review_banner = ''
-        self.mobile_promotional_banner = ''
-        self.mobile_review_banner = ''
+        self.desktop_hp_testimonial_banner = ''
+        self.desktop_hp_promotional_banner = ''
+        self.mobile_hp_testimonial_banner = ''
+        self.mobile_hp_promotional_banner = ''
+
+        self.desktop_pp_testimonial_banner = ''
+        self.desktop_pp_promotional_banner = ''
+        self.mobile_pp_promotional_banner = ''
+
+        self.desktop_cp_testimonial_banner = ''
+        self.desktop_cp_promotional_banner = ''
+        self.mobile_cp_promotional_banner = ''
+
         self._load_banners()
 
     def _load_data_tables(self):
