@@ -223,15 +223,15 @@ class PremierStagingClientData(ClientData):
         # html_id.replace_with(new_soup)
 
         # replace cta
-        html_id = html.find(id='TAKE_THE_NEXT_SETP')
-        new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        new_soup = BeautifulSoup(new)
-        html_id.replace_with(new_soup)
+        # html_id = html.find(id='TAKE_THE_NEXT_SETP')
+        # new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
+        # new_soup = BeautifulSoup(new)
+        # html_id.replace_with(new_soup)
 
         # replace product name
-        html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
-        new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        new_soup = BeautifulSoup(new)
-        html_id.replace_with(new_soup)
+        # html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
+        # new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
+        # new_soup = BeautifulSoup(new)
+        # html_id.replace_with(new_soup)
 
         return html
