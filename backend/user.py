@@ -54,6 +54,7 @@ class User:
         self.behaviour = ''
         self.contradicted_behaviour = None  # not saved - used to check last events contradict previous behaviour
         self.no_time_limit_mode = False
+        self.extra_time_mode = False
         self.replaced_generic_banner = False
         self.events = []
 
@@ -95,6 +96,7 @@ class User:
             self.is_bot = session['is_bot']
             self.behaviour = session['behaviour']
             self.no_time_limit_mode = session['no_time_limit_mode']
+            self.extra_time_mode = session['extra_time_mode']
             self.replaced_generic_banner = session['replaced_generic_banner']
 
             # gets events turning them into Event objects
@@ -137,6 +139,7 @@ class User:
                       f'Bot: {self.is_bot}\n' \
                       f'Behavior: {self.behaviour}\n' \
                       f'No time limit mode: {self.no_time_limit_mode}\n' \
+                      f'Extra time limit mode: {self.extra_time_mode}' \
                       f'Replaced Generic banner: {self.replaced_generic_banner}\n'
 
         return user_str + '\nSession:\n' + session_str
@@ -213,6 +216,7 @@ class User:
             'is_bot': self.is_bot,
             'behaviour': self.behaviour,
             'no_time_limit_mode': self.no_time_limit_mode,
+            'extra_time_mode': self.extra_time_mode,
             'replaced_generic_banner': self.replaced_generic_banner
         }
         result = mongo_client.uxpera.userSessions.insert_one(session_obj)
@@ -283,6 +287,12 @@ class User:
 
     def set_no_time_limit_mode(self):
         self.no_time_limit_mode = True
+
+    def get_extra_time_mode(self):
+        return self.extra_time_mode
+
+    def set_extra_time_mode(self):
+        self.extra_time_mode = True
 
     def get_replaced_generic_banner(self):
         return self.replaced_generic_banner

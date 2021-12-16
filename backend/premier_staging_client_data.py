@@ -26,7 +26,8 @@ class PremierStagingClientData(ClientData):
         #                   'Scrolling_To_Second_Part', 'scrolling_to_third']
 
         self.long_time_events = ['went_to_terms_and_conditions', 'went_to_security_and_privacy', 'went_to_about_us']
-        self.timeout_and_scroll_events = ['timeout', 'Scrolling_To_Second_Part']
+        self.timeout_events = ['timeout']
+        self.scroll_events = ['Scrolling_To_Second_Part']
         self.no_time_limit_events = ['went_to_affiliates', 'went_to_distributors', 'went_to_awards', 'went_to_contact',
                                      'went_to_media', 'went_to_account']
 
