@@ -19,16 +19,13 @@ class UserSession:
         # temp for testing
         if self.client == 'premier_staging':
             self.replace_generic_banner('SB')
-            return
-        else:
-            return
 
-        if not self.user.get_replaced_generic_banner():
-            behaviour = self.client_data.check_behaviour(self.user)
-            if behaviour is not None:
-                print(f'== Calculated Behaviour = {behaviour}')
-                self.user.set_behaviour(behaviour)
-                self.replace_generic_banner(behaviour)
+        # if not self.user.get_replaced_generic_banner():
+        #     behaviour = self.client_data.check_behaviour(self.user)
+        #     if behaviour is not None:
+        #         print(f'== Calculated Behaviour = {behaviour}')
+        #         self.user.set_behaviour(behaviour)
+        #         self.replace_generic_banner(behaviour)
 
         # save updates to user
         print('Save User: ', self.user.save_user())
