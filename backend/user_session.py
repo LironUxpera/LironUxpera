@@ -15,8 +15,14 @@ class UserSession:
     def add_event(self, event):
         print('UserSession Add event')
         self.user.add_event(event)
-        # self.replace_generic_banner('SB')
-        # return
+
+        # temp for testing
+        if self.client == 'premier_staging':
+            self.replace_generic_banner('SB')
+            return
+        else:
+            return
+
         if not self.user.get_replaced_generic_banner():
             behaviour = self.client_data.check_behaviour(self.user)
             if behaviour is not None:
