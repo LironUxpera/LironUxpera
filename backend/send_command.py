@@ -35,13 +35,13 @@ class SendCommand:
         result = cursor.fetchall()
         return result
 
-    def push_banner_to_user(self, client, uuid, banner_html):
+    def push_banner_to_user(self, client, uuid, banner_html, last_page):
         try:
             cursor = self.connection.cursor()
 
             # Create a new record
             sql = "INSERT INTO responder (client_id, user_uuid, response_type, html, configuration) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(sql, (client, uuid, 'banner', banner_html, json.dumps({})))
+            cursor.execute(sql, (client, uuid, 'banner', banner_html, json.dumps({'page': last_page})))
 
             # connection is not autocommit by default. So you must commit to save
             # your changes.

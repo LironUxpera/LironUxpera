@@ -9,12 +9,14 @@ class UserSession:
         self.client = client
         self.uuid = uuid
         self.client_data = client_data
+        self.last_page = ''  # last page this user is on - used for banner display
 
         self.user = User(self.client, self.uuid)
 
     def add_event(self, event):
         print('UserSession Add event')
         self.user.add_event(event)
+        self.last_page = event.page
 
         # temp for testing
         if self.client == 'premier_staging':
@@ -32,5 +34,5 @@ class UserSession:
 
     def replace_generic_banner(self, assumed_behaviour):
         html = self.client_data.calc_banner(assumed_behaviour)
-        command_sender.push_banner_to_user(self.client, self.uuid, str(html))
+        command_sender.push_banner_to_user(self.client, self.uuid, str(html), self.last_page)
         self.user.set_replaced_generic_banner()
