@@ -413,12 +413,12 @@ class PremierStagingClientData(ClientData):
 
         # home page
 
-        # return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
+        return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
 
         # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
 
-        return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
-                                                      user_name, product_name)
+        # return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
+        #                                               user_name, product_name)
 
         # return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
 
