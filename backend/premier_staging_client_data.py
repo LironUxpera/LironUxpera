@@ -314,16 +314,12 @@ class PremierStagingClientData(ClientData):
 
     # product page
 
-    def calc_desktop_pp_testimonial_banner(self, assumed_behaviour):
-        copy_text1 = 'Copy text 1 ' + assumed_behaviour
-        copy_text2 = 'Copy text 2 ' + assumed_behaviour
-        cta_text = 'Call to action ' + assumed_behaviour
-        user_name = 'Harry H'
-
+    def calc_desktop_pp_testimonial_banner(self, copy_text1, copy_text2, copy_text3, copy_text4, user_name):
         html = self.desktop_pp_testimonial_banner
 
-        print('Testimonial banner', assumed_behaviour)
-        print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
+        # TODO Liron no option to change text
+
+        return html
 
         # replace text
         html_id = html.find(id='My_bath_time_is_never_complete')
@@ -357,8 +353,19 @@ class PremierStagingClientData(ClientData):
 
         return html
 
-    def calc_desktop_pp_promotional_banner(self, assumed_behaviour):
-        pass
+    def calc_desktop_pp_promotional_banner(self, copy_text1, copy_text2):
+        html = self.mobile_hp_promotional_banner
+
+        # replace text
+        html_id = html.find(id='n_3OFF_ON_SUMMER_SALE_XXX_Buy_')
+        new = f'<div id="n_3OFF_ON_SUMMER_SALE_XXX_Buy_">' \
+              f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text1}</span><br/>' \
+              f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text2}</span><br/>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        return html
 
     def calc_mobile_pp_promotional_banner(self, assumed_behaviour):
         pass
@@ -406,6 +413,8 @@ class PremierStagingClientData(ClientData):
         print('Testimonial banner', assumed_behaviour)
         print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
+        # home page
+
         # return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
 
         # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
@@ -413,4 +422,10 @@ class PremierStagingClientData(ClientData):
         # return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
         #                                               user_name, product_name)
 
-        return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+        # return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+
+        # product page
+
+        # return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
+
+        return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
