@@ -426,13 +426,13 @@ class PremierStagingClientData(ClientData):
 
         # return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
 
-        return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
+        # return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
 
         # return self.calc_mobile_pp_promotional_banner(copy_text1, copy_text2)
 
         # cart page
 
-        # return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
+        return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
         #
         # return self.calc_desktop_cp_promotional_banner(copy_text1, copy_text2)
         #
