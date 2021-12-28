@@ -174,27 +174,77 @@ class PremierStagingClientData(ClientData):
 
         return result
 
-    def calc_banner(self, assumed_behaviour):
-        # copy = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['copy'])
-        # copy = int(copy)
-        # cta = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['cta'])
-        # cta = int(cta)
-        # print(f'behaviour={assumed_behaviour} copy={copy} cta={cta}')
+        # self.desktop_hp_testimonial_banner = ''
+        # self.desktop_hp_promotional_banner = ''
+        # self.mobile_hp_testimonial_banner = ''
+        # self.mobile_hp_promotional_banner = ''
         #
-        # # check if to use promotional or review banner
-        # if copy % 100 == 6 or copy % 100 == 7:
-        #     promotional = True
-        #     html = self.desktop_promotional_banner
-        # else:
-        #     promotional = False
-        #     html = self.desktop_review_banner
+        # self.desktop_pp_testimonial_banner = ''
+        # self.desktop_pp_promotional_banner = ''
+        # self.mobile_pp_promotional_banner = ''
         #
-        # copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
-        # copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
-        # if type(copy_text2) == float and math.isnan(copy_text2):
-        #     copy_text2 = ''
-        # cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
+        # self.desktop_cp_testimonial_banner = ''
+        # self.desktop_cp_promotional_banner = ''
+        # self.mobile_cp_promotional_banner = ''
 
+    # home page
+
+    def calc_desktop_hp_testimonial_banner(self, assumed_behaviour):
+        copy_text1 = 'Copy text 1 ' + assumed_behaviour
+        copy_text2 = 'Copy text 2 ' + assumed_behaviour
+        cta_text = 'Call to action ' + assumed_behaviour
+        user_name = 'Harry H'
+        product_name = 'Product name'
+
+        html = self.desktop_hp_testimonial_banner
+
+        print('Testimonial banner', assumed_behaviour)
+        print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
+
+        # replace text
+        html_id = html.find(id='My_bath_time_is_never_complete')
+        new = f'<div id="My_bath_time_is_never_complete">' \
+              f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace user name
+        # TODO harry cannot find by this ID for some reason
+        html_id = html.find(id='n____John_B')
+        new = f'<div id="n____John_B">' \
+              f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
+              f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace cta
+        html_id = html.find(id='TAKE_THE_NEXT_SETP')
+        new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace product name
+        html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
+        new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        return html
+
+    def calc_desktop_hp_promotional_banner(self, assumed_behaviour):
+        pass
+
+    def calc_mobile_hp_testimonial_banner(self, assumed_behaviour):
+        pass
+
+    def calc_mobile_hp_promotional_banner(self, assumed_behaviour):
+        pass
+
+    # product page
+
+    def calc_desktop_pp_testimonial_banner(self, assumed_behaviour):
         copy_text1 = 'Copy text 1 ' + assumed_behaviour
         copy_text2 = 'Copy text 2 ' + assumed_behaviour
         cta_text = 'Call to action ' + assumed_behaviour
@@ -236,3 +286,43 @@ class PremierStagingClientData(ClientData):
         # html_id.replace_with(new_soup)
 
         return html
+
+    def calc_desktop_pp_promotional_banner(self, assumed_behaviour):
+        pass
+
+    def calc_mobile_pp_promotional_banner(self, assumed_behaviour):
+        pass
+
+    # cart page
+
+    def calc_desktop_cp_testimonial_banner(self, assumed_behaviour):
+        return self.calc_desktop_pp_testimonial_banner(assumed_behaviour)
+
+    def calc_desktop_cp_promotional_banner(self, assumed_behaviour):
+        return self.calc_desktop_pp_promotional_banner(assumed_behaviour)
+
+    def calc_mobile_cp_promotional_banner(self, assumed_behaviour):
+        return self.calc_mobile_hp_promotional_banner(assumed_behaviour)
+
+    def calc_banner(self, assumed_behaviour):
+        # copy = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['copy'])
+        # copy = int(copy)
+        # cta = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['cta'])
+        # cta = int(cta)
+        # print(f'behaviour={assumed_behaviour} copy={copy} cta={cta}')
+        #
+        # # check if to use promotional or review banner
+        # if copy % 100 == 6 or copy % 100 == 7:
+        #     promotional = True
+        #     html = self.desktop_promotional_banner
+        # else:
+        #     promotional = False
+        #     html = self.desktop_review_banner
+        #
+        # copy_text1 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy1']
+        # copy_text2 = self.copy_df[self.copy_df.id == copy].iloc[0]['copy2']
+        # if type(copy_text2) == float and math.isnan(copy_text2):
+        #     copy_text2 = ''
+        # cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
+
+        return self.calc_desktop_hp_testimonial_banner(assumed_behaviour)
