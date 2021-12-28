@@ -63,7 +63,7 @@ class PremierStagingClientData(ClientData):
         # checkout page
         self.desktop_cp_testimonial_banner = self.desktop_pp_testimonial_banner
         self.desktop_cp_promotional_banner = self.desktop_pp_promotional_banner
-        self.mobile_cp_promotional_banner = self.mobile_hp_promotional_banner
+        self.mobile_cp_promotional_banner = self.mobile_pp_promotional_banner
 
     @staticmethod
     def _match_link(link):
@@ -173,19 +173,6 @@ class PremierStagingClientData(ClientData):
                 return match
 
         return result
-
-        # self.desktop_hp_testimonial_banner = ''
-        # self.desktop_hp_promotional_banner = ''
-        # self.mobile_hp_testimonial_banner = ''
-        # self.mobile_hp_promotional_banner = ''
-        #
-        # self.desktop_pp_testimonial_banner = ''
-        # self.desktop_pp_promotional_banner = ''
-        # self.mobile_pp_promotional_banner = ''
-        #
-        # self.desktop_cp_testimonial_banner = ''
-        # self.desktop_cp_promotional_banner = ''
-        # self.mobile_cp_promotional_banner = ''
 
     # home page
 
@@ -359,6 +346,20 @@ class PremierStagingClientData(ClientData):
         # replace text
         html_id = html.find(id='n_3OFF_ON_SUMMER_SALE_XXX_Buy_')
         new = f'<div id="n_3OFF_ON_SUMMER_SALE_XXX_Buy_">' \
+              f'<span style="font-size:11.75333023071289px;">{copy_text1}</span><br/>' \
+              f'<span style="font-size:11.75333023071289px;">{copy_text2}</span>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        return html
+
+    def calc_mobile_pp_promotional_banner(self, copy_text1, copy_text2):
+        html = self.mobile_pp_promotional_banner
+
+        # replace text
+        html_id = html.find(id='n_5OFF__2nd_item__orders_over_')
+        new = f'<div id="n_5OFF__2nd_item__orders_over_">' \
               f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text1}</span><br/>' \
               f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text2}</span><br/>' \
               f'</div>'
@@ -367,19 +368,16 @@ class PremierStagingClientData(ClientData):
 
         return html
 
-    def calc_mobile_pp_promotional_banner(self, assumed_behaviour):
-        pass
-
     # cart page
 
-    def calc_desktop_cp_testimonial_banner(self, assumed_behaviour):
-        return self.calc_desktop_pp_testimonial_banner(assumed_behaviour)
+    def calc_desktop_cp_testimonial_banner(self, copy_text1, copy_text2, copy_text3, copy_text4, user_name):
+        return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
 
-    def calc_desktop_cp_promotional_banner(self, assumed_behaviour):
-        return self.calc_desktop_pp_promotional_banner(assumed_behaviour)
+    def calc_desktop_cp_promotional_banner(self, copy_text1, copy_text2):
+        return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
 
-    def calc_mobile_cp_promotional_banner(self, assumed_behaviour):
-        return self.calc_mobile_hp_promotional_banner(assumed_behaviour)
+    def calc_mobile_cp_promotional_banner(self,  copy_text1, copy_text2):
+        return self.calc_mobile_pp_promotional_banner( copy_text1, copy_text2)
 
     def calc_banner(self, assumed_behaviour):
         # copy = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['copy'])
@@ -415,7 +413,7 @@ class PremierStagingClientData(ClientData):
 
         # home page
 
-        # return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
+        return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
 
         # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
 
@@ -428,4 +426,15 @@ class PremierStagingClientData(ClientData):
 
         # return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
 
-        return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
+        # return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
+
+        # return self.calc_mobile_pp_promotional_banner(copy_text1, copy_text2)
+
+        # cart page
+
+        # return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
+        #
+        # return self.calc_desktop_cp_promotional_banner(copy_text1, copy_text2)
+        #
+        # return  self.calc_mobile_cp_promotional_banner(copy_text1, copy_text2)
+
