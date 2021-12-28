@@ -354,7 +354,7 @@ class PremierStagingClientData(ClientData):
         return html
 
     def calc_desktop_pp_promotional_banner(self, copy_text1, copy_text2):
-        html = self.mobile_hp_promotional_banner
+        html = self.desktop_pp_promotional_banner
 
         # replace text
         html_id = html.find(id='n_3OFF_ON_SUMMER_SALE_XXX_Buy_')
