@@ -251,7 +251,7 @@ class PremierStagingClientData(ClientData):
 
     def calc_mobile_hp_testimonial_banner(self, copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
                                           user_name, product_name):
-        html = self.desktop_hp_testimonial_banner
+        html = self.mobile_hp_testimonial_banner
 
         # replace text
         html_id = html.find(id='My_bath_time_is_never_complete')
