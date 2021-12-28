@@ -286,9 +286,31 @@ class PremierStagingClientData(ClientData):
 
         return html
 
+    def calc_mobile_hp_promotional_banner(self, copy_text1, copy_text2, cta_text, product_name):
+        html = self.mobile_hp_promotional_banner
 
-    def calc_mobile_hp_promotional_banner(self, assumed_behaviour):
-        pass
+        # replace text
+        html_id = html.find(id='n_3OFF_ON_SUMMER_SALE_XXX_Buy_')
+        new = f'<div id="n_3OFF_ON_SUMMER_SALE_XXX_Buy_">' \
+              f'<span style="font-size:54.72557830810547px;">{copy_text1}</span><br/>' \
+              f'<span style="font-family:Poppins-Medium;font-size:31.364599227905273px;">{copy_text2}</span><br/>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace cta
+        html_id = html.find(id='TAKE_THE_NEXT_SETP')
+        new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace product name
+        html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
+        new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        return html
 
     # product page
 
@@ -388,4 +410,7 @@ class PremierStagingClientData(ClientData):
 
         # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
 
-        return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text, user_name, product_name)
+        # return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
+        #                                               user_name, product_name)
+
+        return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
