@@ -189,17 +189,8 @@ class PremierStagingClientData(ClientData):
 
     # home page
 
-    def calc_desktop_hp_testimonial_banner(self, assumed_behaviour):
-        copy_text1 = 'Copy text 1 ' + assumed_behaviour
-        copy_text2 = 'Copy text 2 ' + assumed_behaviour
-        cta_text = 'Call to action ' + assumed_behaviour
-        user_name = 'Harry H'
-        product_name = 'Product name'
-
+    def calc_desktop_hp_testimonial_banner(self, copy_text1, copy_text2, cta_text, user_name, product_name):
         html = self.desktop_hp_testimonial_banner
-
-        print('Testimonial banner', assumed_behaviour)
-        print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
         # replace text
         html_id = html.find(id='My_bath_time_is_never_complete')
@@ -233,8 +224,31 @@ class PremierStagingClientData(ClientData):
 
         return html
 
-    def calc_desktop_hp_promotional_banner(self, assumed_behaviour):
-        pass
+    def calc_desktop_hp_promotional_banner(self, copy_text1, copy_text2, cta_text, product_name):
+        html = self.desktop_hp_promotional_banner
+
+        # replace text
+        html_id = html.find(id='n_3OFF_ON_SUMMER_SALEXXX_Buy_O')
+        new = f'<div id="n_3OFF_ON_SUMMER_SALEXXX_Buy_O">' \
+              f'<span style="font-size:54.72557830810547px;">{copy_text1}</span><br/>' \
+              f'<span style="font-family:Poppins-Medium;font-size:62.543521881103516px;">{copy_text2}</span><br/>' \
+              f'</div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace cta
+        html_id = html.find(id='TAKE_THE_NEXT_SETP')
+        new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        # replace product name
+        html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
+        new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
+        new_soup = BeautifulSoup(new)
+        html_id.replace_with(new_soup)
+
+        return html
 
     def calc_mobile_hp_testimonial_banner(self, assumed_behaviour):
         pass
@@ -325,4 +339,15 @@ class PremierStagingClientData(ClientData):
         #     copy_text2 = ''
         # cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
 
-        return self.calc_desktop_hp_testimonial_banner(assumed_behaviour)
+        copy_text1 = 'Copy text 1 ' + assumed_behaviour
+        copy_text2 = 'Copy text 2 ' + assumed_behaviour
+        cta_text = 'Call to action ' + assumed_behaviour
+        user_name = 'Harry H'
+        product_name = 'Product name'
+
+        print('Testimonial banner', assumed_behaviour)
+        print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
+
+        # return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
+
+        return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
