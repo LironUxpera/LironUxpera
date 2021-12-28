@@ -58,7 +58,7 @@ class PremierStagingClientData(ClientData):
         with open(f'../clients/{self.client}/banners/Behaviour-Desktop-192x112.html', 'rt') as file:
             self.desktop_pp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
         with open(f'../clients/{self.client}/banners/Behaviour-Mobile-400x62.html', 'rt') as file:
-            self.mobile_hp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
+            self.mobile_pp_promotional_banner = BeautifulSoup(file.read(), features="html.parser")
 
         # checkout page
         self.desktop_cp_testimonial_banner = self.desktop_pp_testimonial_banner
