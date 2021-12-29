@@ -165,5 +165,11 @@ class ClientData:
     def _get_product_info(self, prod_id):
         return '', '', ''
 
+    def _get_cta_id_for_behaviour(self, behaviour):
+        return None
+
+    def _get_cta_for_cta_id(self, cta_id):
+        return ''
+
     def calc_banner(self, assumed_behaviour, page_type, is_mobile):
         return None

@@ -189,6 +189,32 @@ class PremierStagingClientData(ClientData):
         image_link = prod['image_link'].values[0]
         return title, link, image_link
 
+    def _get_cta_id_for_behaviour(self, behaviour):
+        table = {
+            'BH': [911, 912],
+            'DP': [1011, 1012],
+            'SL': [1111, 1112],
+            'SB': [1211, 1212],
+            'NBS': [1311, 1312],
+        }
+
+        # BH:  # 900-#910
+        # DP:  # 909,#1000-#1012
+        # SL:  # 1100,#1004,#1101, #1002,#910,#1102,#1103,#903,#904,#905,#1008,#1009,#1104,#909
+        # SB:  # 1100,#1200-#1205
+        # NBS:  # 1004,#1101,#1203,#1300,#1202,#1301,#1302,#1200,#1201,#1204.
+
+        # get random from behaviour list
+        cta_list = table[behaviour]
+        return random.choice(cta_list)
+
+    def _get_cta_for_cta_id(self, cta_id):
+        cta = self.cta_df[self.cta_df.id == cta_id]
+        if len(cta) == 0:
+            return ''
+
+        return cta['cta'].values[0]
+
     # home page
 
     def calc_desktop_hp_testimonial_banner(self, copy_text1, copy_text2, cta_text, user_name, product_name):
@@ -418,12 +444,18 @@ class PremierStagingClientData(ClientData):
         # select a random product and get it's details
         prod_id = self._get_random_best_seller()
         title, link, image_link = self._get_product_info(prod_id)
+        print('Selected best seller', prod_id, title)
 
         copy_text1 = 'Copy text 1 ' + assumed_behaviour
         copy_text2 = 'Copy text 2 ' + assumed_behaviour
         copy_text3 = 'Copy text 3 ' + assumed_behaviour
         copy_text4 = 'Copy text 4 ' + assumed_behaviour
-        cta_text = 'Call to action ' + assumed_behaviour
+
+        # CTA
+        cta_id = self._get_cta_id_for_behaviour(assumed_behaviour)
+        cta_text = self._get_cta_for_cta_id(cta_id)
+        # cta_text = 'Call to action ' + assumed_behaviour
+
         user_name = 'Harry H'
         product_name = title
 
