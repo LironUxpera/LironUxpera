@@ -24,7 +24,7 @@ class UserSession:
         if 'checkout/cart/' in page:
             return 'cp'
 
-        if page == '' or page == '/en/':
+        if page == '' or page == '/' or page == '/en/':
             return 'hp'
 
         if 'product/view/' in page:
