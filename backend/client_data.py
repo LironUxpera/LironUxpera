@@ -22,6 +22,8 @@ class ClientData:
 
         # load the behavior mapping, copy & cta tables
         self.behavior_mapping_df = None
+        self.products_df = None
+        self.best_sellers_df = None
         self.copy_df = None
         self.cta_df = None
         self._load_data_tables()
@@ -156,6 +158,12 @@ class ClientData:
                 behaviour = 'SB'
 
         return behaviour
+
+    def _get_random_best_seller(self):
+        return None
+
+    def _get_product_info(self, prod_id):
+        return '', '', ''
 
     def calc_banner(self, assumed_behaviour, page_type, is_mobile):
         return None

@@ -37,6 +37,8 @@ class PremierStagingClientData(ClientData):
         self.behavior_mapping_df['cta'] = self.behavior_mapping_df['cta'].apply(lambda x: x.split(','))
         self.behavior_mapping_df.set_index('behavior', inplace=True)
 
+        self.products_df = pd.read_csv(f'../clients/{self.client}/data/premier_products.csv')
+        self.best_sellers_df = pd.read_excel(f'../clients/{self.client}/data/Best Sellers-LIVE.xlsx')
         self.copy_desktop_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy  2 Rows Desktop -Live.xlsx')
         self.copy_mobile_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy 4 Rows Mobile -Live.xlsx')
         self.cta_df = pd.read_csv(f'../clients/{self.client}/data/cta-general.csv')
@@ -173,6 +175,19 @@ class PremierStagingClientData(ClientData):
                 return match
 
         return result
+
+    def _get_random_best_seller(self):
+        return self.best_sellers_df.sample(1)['id'].values[0]
+
+    def _get_product_info(self, prod_id):
+        prod = self.products_df[self.products_df.id == prod_id]
+        if len(prod) == 0:
+            return '', '', ''
+
+        title = prod['title'].values[0]
+        link = prod['title'].values[0]
+        image_link = prod['image_link'].values[0]
+        return title, link, image_link
 
     # home page
 
@@ -400,13 +415,17 @@ class PremierStagingClientData(ClientData):
         #     copy_text2 = ''
         # cta_text = self.cta_df[self.cta_df.id == cta].iloc[0]['cta']
 
+        # select a random product and get it's details
+        prod_id = self._get_random_best_seller()
+        title, link, image_link = self._get_product_info(prod_id)
+
         copy_text1 = 'Copy text 1 ' + assumed_behaviour
         copy_text2 = 'Copy text 2 ' + assumed_behaviour
         copy_text3 = 'Copy text 3 ' + assumed_behaviour
         copy_text4 = 'Copy text 4 ' + assumed_behaviour
         cta_text = 'Call to action ' + assumed_behaviour
         user_name = 'Harry H'
-        product_name = 'Product name'
+        product_name = title
 
         print('@@@@ Banner: ', assumed_behaviour, page_type, is_mobile)
         print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
