@@ -157,5 +157,5 @@ class ClientData:
 
         return behaviour
 
-    def calc_banner(self, assumed_behaviour):
+    def calc_banner(self, assumed_behaviour, page_type, is_mobile):
         return None

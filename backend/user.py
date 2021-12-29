@@ -294,6 +294,9 @@ class User:
     def set_extra_time_mode(self):
         self.extra_time_mode = True
 
+    def get_is_mobile(self):
+        return self.is_mobile
+
     def get_replaced_generic_banner(self):
         return self.replaced_generic_banner
 

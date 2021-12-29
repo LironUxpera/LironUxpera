@@ -379,7 +379,7 @@ class PremierStagingClientData(ClientData):
     def calc_mobile_cp_promotional_banner(self,  copy_text1, copy_text2):
         return self.calc_mobile_pp_promotional_banner( copy_text1, copy_text2)
 
-    def calc_banner(self, assumed_behaviour):
+    def calc_banner(self, assumed_behaviour, page_type, is_mobile):
         # copy = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['copy'])
         # copy = int(copy)
         # cta = random.choice(self.behavior_mapping_df.loc[assumed_behaviour]['cta'])
@@ -408,33 +408,43 @@ class PremierStagingClientData(ClientData):
         user_name = 'Harry H'
         product_name = 'Product name'
 
-        print('Testimonial banner', assumed_behaviour)
+        print('@@@@ Banner: ', assumed_behaviour, page_type, is_mobile)
         print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
 
-        # home page
+        if page_type == 'hp':
+            # home page
+            if not is_mobile:
+                print('Testimonial banner')
+                return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name,
+                                                               product_name)
 
-        return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name, product_name)
+                # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+            else:
+                print('Testimonial banner')
+                return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
+                                                              user_name, product_name)
 
-        # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+                # return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
 
-        # return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
-        #                                               user_name, product_name)
+        elif page_type == 'pp':
+            # product page
+            if not is_mobile:
+                print('Testimonial banner')
+                return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
 
-        # return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+                # return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
+            else:
+                print('Promotional banner')
+                return self.calc_mobile_pp_promotional_banner(copy_text1, copy_text2)
 
-        # product page
+        elif page_type == 'cp':
+            # cart page
+            if not is_mobile:
+                print('Testimonial banner')
+                return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
 
-        # return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
-
-        # return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
-
-        # return self.calc_mobile_pp_promotional_banner(copy_text1, copy_text2)
-
-        # cart page
-
-        # return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
-        #
-        # return self.calc_desktop_cp_promotional_banner(copy_text1, copy_text2)
-        #
-        # return  self.calc_mobile_cp_promotional_banner(copy_text1, copy_text2)
+                # return self.calc_desktop_cp_promotional_banner(copy_text1, copy_text2)
+            else:
+                print('Promotional banner')
+                return  self.calc_mobile_cp_promotional_banner(copy_text1, copy_text2)
 
