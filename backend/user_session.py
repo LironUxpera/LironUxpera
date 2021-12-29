@@ -71,7 +71,7 @@ class UserSession:
             if self.client == 'premier_staging' and self.page_type != '' and behaviour is not None:
                 print(f'== Calculated Behaviour = {behaviour}')
                 self.user.set_behaviour(behaviour)
-                self.replace_generic_banner(behaviour)
+                self.replace_generic_banner(behaviour, self.page_type, self.user.get_is_mobile())
 
         # save updates to user
         print('Save User: ', self.user.save_user())
