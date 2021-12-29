@@ -63,15 +63,15 @@ class UserSession:
         print('On page type: ', self.page_type)
 
         # temp for testing - if we are on staging and on a page we can show a banner
-        if self.client == 'premier_staging' and self.page_type != '':
-            self.replace_generic_banner('SB', self.page_type, self.user.get_is_mobile())
+        # if self.client == 'premier_staging' and self.page_type != '':
+        #     self.replace_generic_banner('SB', self.page_type, self.user.get_is_mobile())
 
-        # if not self.user.get_replaced_generic_banner():
-        #     behaviour = self.client_data.check_behaviour(self.user)
-        #     if behaviour is not None:
-        #         print(f'== Calculated Behaviour = {behaviour}')
-        #         self.user.set_behaviour(behaviour)
-        #         self.replace_generic_banner(behaviour)
+        if not self.user.get_replaced_generic_banner():
+            behaviour = self.client_data.check_behaviour(self.user)
+            if self.client == 'premier_staging' and self.page_type != '' and behaviour is not None:
+                print(f'== Calculated Behaviour = {behaviour}')
+                self.user.set_behaviour(behaviour)
+                self.replace_generic_banner(behaviour)
 
         # save updates to user
         print('Save User: ', self.user.save_user())
