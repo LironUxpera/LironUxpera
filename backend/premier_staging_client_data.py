@@ -39,8 +39,8 @@ class PremierStagingClientData(ClientData):
 
         self.products_df = pd.read_csv(f'../clients/{self.client}/data/premier_products.csv')
         self.best_sellers_df = pd.read_excel(f'../clients/{self.client}/data/Best Sellers-LIVE.xlsx')
-        self.copy_desktop_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy  2 Rows Desktop -Live.xlsx')
-        self.copy_mobile_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy 4 Rows Mobile -Live.xlsx')
+        self.copy4_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy  2 Rows Desktop -Live.xlsx')
+        self.copy2_df = pd.read_excel(f'../clients/{self.client}/data/Premier Copy 4 Rows Mobile -Live.xlsx')
         self.cta_df = pd.read_csv(f'../clients/{self.client}/data/cta-general.csv')
 
     def _load_banners(self):
@@ -214,6 +214,32 @@ class PremierStagingClientData(ClientData):
             return ''
 
         return cta['cta'].values[0]
+
+    def _get_copy4_for_prod_id(self, prod_id):
+        copy = self.copy4_df[self.copy4_df.prod_id == prod_id]
+        if len(copy) == 0:
+            return ''
+
+        copy = copy.sample(1)
+
+        row1 = copy['row1'].values[0]
+        row2 = copy['row2'].values[0]
+        row3 = copy['row3'].values[0]
+        row4 = copy['row4'].values[0]
+        name = copy['name'].values[0]
+        return row1, row2, row3, row4, name
+
+    def _get_copy2_for_prod_id(self, prod_id):
+        copy = self.copy4_df[self.copy4_df.prod_id == prod_id]
+        if len(copy) == 0:
+            return ''
+
+        copy = copy.sample(1)
+
+        row1 = copy['row1'].values[0]
+        row2 = copy['row2'].values[0]
+        name = copy['name'].values[0]
+        return row1, row2, name
 
     # home page
 
@@ -446,17 +472,25 @@ class PremierStagingClientData(ClientData):
         title, link, image_link = self._get_product_info(prod_id)
         print('Selected best seller', prod_id, title)
 
-        copy_text1 = 'Copy text 1 ' + assumed_behaviour
-        copy_text2 = 'Copy text 2 ' + assumed_behaviour
-        copy_text3 = 'Copy text 3 ' + assumed_behaviour
-        copy_text4 = 'Copy text 4 ' + assumed_behaviour
+        # copy
+        row1, row2, row3, row4, name = self._get_copy4_for_prod_id(prod_id)
+        copy_text1 = row1
+        copy_text2 = row2
+        copy_text3 = row3
+        copy_text4 = row4
+        user_name = name
+
+        # copy_text1 = 'Copy text 1 ' + assumed_behaviour
+        # copy_text2 = 'Copy text 2 ' + assumed_behaviour
+        # copy_text3 = 'Copy text 3 ' + assumed_behaviour
+        # copy_text4 = 'Copy text 4 ' + assumed_behaviour
+        # user_name = 'Harry H'
 
         # CTA
         cta_id = self._get_cta_id_for_behaviour(assumed_behaviour)
         cta_text = self._get_cta_for_cta_id(cta_id)
         # cta_text = 'Call to action ' + assumed_behaviour
 
-        user_name = 'Harry H'
         product_name = title
 
         print('@@@@ Banner: ', assumed_behaviour, page_type, is_mobile)

@@ -24,7 +24,8 @@ class ClientData:
         self.behavior_mapping_df = None
         self.products_df = None
         self.best_sellers_df = None
-        self.copy_df = None
+        self.copy4_df = None
+        self.copy2_df = None
         self.cta_df = None
         self._load_data_tables()
 
@@ -170,6 +171,12 @@ class ClientData:
 
     def _get_cta_for_cta_id(self, cta_id):
         return ''
+
+    def _get_copy4_for_prod_id(self, prod_id):
+        return '', '', '', '', ''
+
+    def _get_copy2_for_prod_id(self, prod_id):
+        return '', '', ''
 
     def calc_banner(self, assumed_behaviour, page_type, is_mobile):
         return None
