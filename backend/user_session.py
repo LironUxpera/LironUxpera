@@ -18,7 +18,7 @@ class UserSession:
     def calc_page_type(self):
         page = urlparse(self.last_page)
         page = page.path
-        
+
         print('Calculating page for: ', page)
 
         if 'checkout/cart/' in page:
@@ -60,6 +60,7 @@ class UserSession:
         self.user.add_event(event)
         self.last_page = event.page
         self.page_type = self.calc_page_type()
+        print('On page type: ', self.page_type)
 
         # temp for testing - if we are on staging and on a page we can show a banner
         if self.client == 'premier_staging' and self.page_type != '':
