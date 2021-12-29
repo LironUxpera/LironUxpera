@@ -16,7 +16,10 @@ class UserSession:
         self.user = User(self.client, self.uuid)
 
     def calc_page_type(self):
-        page = urlparse(self.last_page).path
+        page = urlparse(self.last_page)
+        page = page.path
+        
+        print('Calculating page for: ', page)
 
         if 'checkout/cart/' in page:
             return 'cp'
