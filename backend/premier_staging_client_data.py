@@ -222,11 +222,26 @@ class PremierStagingClientData(ClientData):
 
         copy = copy.sample(1)
 
-        row1 = copy['row1'].values[0]
-        row2 = copy['row2'].values[0]
-        row3 = copy['row3'].values[0]
-        row4 = copy['row4'].values[0]
-        name = copy['name'].values[0]
+        if 'row1' in copy:
+            row1 = copy['row1'].values[0]
+        else:
+            row1 = ''
+        if 'row2' in copy:
+            row2 = copy['row2'].values[0]
+        else:
+            row2 = ''
+        if 'row3' in copy:
+            row3 = copy['row3'].values[0]
+        else:
+            row3 = ''
+        if 'row4' in copy:
+            row4 = copy['row4'].values[0]
+        else:
+            row4 = ''
+        if 'name' in copy:
+            name = copy['name'].values[0]
+        else:
+            name = ''
         return row1, row2, row3, row4, name
 
     def _get_copy2_for_prod_id(self, prod_id):
@@ -236,9 +251,18 @@ class PremierStagingClientData(ClientData):
 
         copy = copy.sample(1)
 
-        row1 = copy['row1'].values[0]
-        row2 = copy['row2'].values[0]
-        name = copy['name'].values[0]
+        if 'row1' in copy:
+            row1 = copy['row1'].values[0]
+        else:
+            row1 = ''
+        if 'row2' in copy:
+            row2 = copy['row2'].values[0]
+        else:
+            row2 = ''
+        if 'name' in copy:
+            name = copy['name'].values[0]
+        else:
+            name = ''
         return row1, row2, name
 
     # home page
