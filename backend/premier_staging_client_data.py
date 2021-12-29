@@ -496,7 +496,7 @@ class PremierStagingClientData(ClientData):
         title, link, image_link = self._get_product_info(prod_id)
         print('Selected best seller', prod_id, title)
 
-        # copy
+        # copy 4
         row1, row2, row3, row4, name = self._get_copy4_for_prod_id(prod_id)
         copy_text1 = row1
         copy_text2 = row2
@@ -510,6 +510,12 @@ class PremierStagingClientData(ClientData):
         # copy_text4 = 'Copy text 4 ' + assumed_behaviour
         # user_name = 'Harry H'
 
+        # copy 2
+        row1, row2, name = self._get_copy2_for_prod_id(prod_id)
+        copy2_text1 = row1
+        copy2_text2 = row2
+        user2_name = name
+
         # CTA
         cta_id = self._get_cta_id_for_behaviour(assumed_behaviour)
         cta_text = self._get_cta_for_cta_id(cta_id)
@@ -518,42 +524,53 @@ class PremierStagingClientData(ClientData):
         product_name = title
 
         print('@@@@ Banner: ', assumed_behaviour, page_type, is_mobile)
-        print(f'copy_text="{copy_text1} {copy_text2}" cta_text="{cta_text}"')
+        print(f'copy_text="{copy_text1} {copy_text2} {copy_text3} {copy_text4}" cta_text="{cta_text}"')
+        print(f'copy2_text="{copy2_text1} {copy2_text2}""')
+        testimonial = random.choice([True, False])
 
         if page_type == 'hp':
             # home page
             if not is_mobile:
-                print('Testimonial banner')
-                return self.calc_desktop_hp_testimonial_banner(copy_text1, copy_text2, cta_text, user_name,
-                                                               product_name)
-
-                # return self.calc_desktop_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+                if testimonial:
+                    print('Testimonial banner')
+                    return self.calc_desktop_hp_testimonial_banner(copy2_text1, copy2_text2, cta_text, user2_name,
+                                                                   product_name)
+                else:
+                    print('Promotional banner')
+                    return self.calc_desktop_hp_promotional_banner(copy2_text1, copy2_text2, cta_text, product_name)
             else:
-                print('Testimonial banner')
-                return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, cta_text,
-                                                              user_name, product_name)
-
-                # return self.calc_mobile_hp_promotional_banner(copy_text1, copy_text2, cta_text, product_name)
+                if testimonial:
+                    print('Testimonial banner')
+                    return self.calc_mobile_hp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4,
+                                                                  cta_text, user_name, product_name)
+                else:
+                    print('Promotional banner')
+                    return self.calc_mobile_hp_promotional_banner(copy2_text1, copy2_text2, cta_text, product_name)
 
         elif page_type == 'pp':
             # product page
             if not is_mobile:
-                print('Testimonial banner')
-                return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
-
-                # return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
+                if testimonial:
+                    print('Testimonial banner')
+                    return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4,
+                                                                   user_name)
+                else:
+                    print('Promotional banner')
+                    return self.calc_desktop_pp_promotional_banner(copy2_text1, copy2_text2)
             else:
                 print('Promotional banner')
-                return self.calc_mobile_pp_promotional_banner(copy_text1, copy_text2)
+                return self.calc_mobile_pp_promotional_banner(copy2_text1, copy2_text2)
 
         elif page_type == 'cp':
             # cart page
             if not is_mobile:
-                print('Testimonial banner')
-                return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
-
-                # return self.calc_desktop_cp_promotional_banner(copy_text1, copy_text2)
+                if testimonial:
+                    print('Testimonial banner')
+                    return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4,
+                                                                   user_name)
+                else:
+                    print('Promotional banner')
+                    return self.calc_desktop_cp_promotional_banner(copy2_text1, copy2_text2)
             else:
                 print('Promotional banner')
-                return  self.calc_mobile_cp_promotional_banner(copy_text1, copy_text2)
-
+                return self.calc_mobile_cp_promotional_banner(copy2_text1, copy2_text2)
