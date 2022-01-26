@@ -282,7 +282,7 @@ class PremierStagingClientData(ClientData):
         html_id = html.find(id='n____John_B')
         new = f'<div id="n____John_B">' \
               f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
-              f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
+              f'<span">{user_name}.</span>' \
               f'</div>'
         new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
@@ -305,10 +305,10 @@ class PremierStagingClientData(ClientData):
         html = self.desktop_hp_promotional_banner
 
         # replace text
-        html_id = html.find(id='n_3OFF_ON_SUMMER_SALEXXX_Buy_O')
-        new = f'<div id="n_3OFF_ON_SUMMER_SALEXXX_Buy_O">' \
-              f'<span style="font-size:54.72557830810547px;">{copy_text1}</span><br/>' \
-              f'<span style="font-family:Poppins-Medium;font-size:62.543521881103516px;">{copy_text2}</span><br/>' \
+        html_id = html.find(id='n_3_OFF_ON_SUMMER_SALEXXX_BUY_')
+        new = f'<div id="n_3_OFF_ON_SUMMER_SALEXXX_BUY_">' \
+              f'<span">{copy_text1}</span><br/>' \
+              f'<span">{copy_text2}</span><br/>' \
               f'</div>'
         new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
@@ -332,8 +332,8 @@ class PremierStagingClientData(ClientData):
         html = self.mobile_hp_testimonial_banner
 
         # replace text
-        html_id = html.find(id='My_bath_time_is_never_complete')
-        new = f'<div id="My_bath_time_is_never_complete">' \
+        html_id = html.find(id='MY_BATH_TIME_IS_NEVER_COMPLETE')
+        new = f'<div id="MY_BATH_TIME_IS_NEVER_COMPLETE">' \
               f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
               f'<span>"{copy_text3}</span><br/><span>{copy_text4}”</span><br/>' \
               f'</div>'
@@ -368,10 +368,10 @@ class PremierStagingClientData(ClientData):
         html = self.mobile_hp_promotional_banner
 
         # replace text
-        html_id = html.find(id='n_3OFF_ON_SUMMER_SALE_XXX_Buy_')
-        new = f'<div id="n_3OFF_ON_SUMMER_SALE_XXX_Buy_">' \
-              f'<span style="font-size:54.72557830810547px;">{copy_text1}</span><br/>' \
-              f'<span style="font-family:Poppins-Medium;font-size:31.364599227905273px;">{copy_text2}</span><br/>' \
+        html_id = html.find(id='n_3_OFF_ON_SUMMER_SALE_XXX_BUY')
+        new = f'<div id="n_3_OFF_ON_SUMMER_SALE_XXX_BUY">' \
+              f'<span">{copy_text1}</span><br/>' \
+              f'<span">{copy_text2}</span><br/>' \
               f'</div>'
         new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
@@ -392,42 +392,17 @@ class PremierStagingClientData(ClientData):
 
     # product page
 
-    def calc_desktop_pp_testimonial_banner(self, copy_text1, copy_text2, copy_text3, copy_text4, user_name):
+    def calc_desktop_pp_testimonial_banner(self, copy_text1, copy_text2, user_name):
         html = self.desktop_pp_testimonial_banner
-
-        # TODO Liron no option to change text
-
-        return html
 
         # replace text
         html_id = html.find(id='My_bath_time_is_never_complete')
         new = f'<div id="My_bath_time_is_never_complete">' \
               f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
+              f'<span>"{user_name}</span>' \
               f'</div>'
         new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
-
-        # replace user name
-        # TODO harry cannot find by this ID for some reason
-        # html_id = html.find(id='n____John_B')
-        # new = f'<div id="n____John_B">' \
-        #       f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
-        #       f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
-        #       f'</div>'
-        # new_soup = BeautifulSoup(new, features='html.parser')
-        # html_id.replace_with(new_soup)
-
-        # replace cta
-        # html_id = html.find(id='TAKE_THE_NEXT_SETP')
-        # new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        # new_soup = BeautifulSoup(new, features='html.parser')
-        # html_id.replace_with(new_soup)
-
-        # replace product name
-        # html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
-        # new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        # new_soup = BeautifulSoup(new, features='html.parser')
-        # html_id.replace_with(new_soup)
 
         return html
 
@@ -435,10 +410,10 @@ class PremierStagingClientData(ClientData):
         html = self.desktop_pp_promotional_banner
 
         # replace text
-        html_id = html.find(id='n_3OFF_ON_SUMMER_SALE_XXX_Buy_')
-        new = f'<div id="n_3OFF_ON_SUMMER_SALE_XXX_Buy_">' \
-              f'<span style="font-size:11.75333023071289px;">{copy_text1}</span><br/>' \
-              f'<span style="font-size:11.75333023071289px;">{copy_text2}</span>' \
+        html_id = html.find(id='n_3_OFF_ON_SUMMER_SALE_XXX_BUY')
+        new = f'<div id="n_3_OFF_ON_SUMMER_SALE_XXX_BUY">' \
+              f'<span">{copy_text1}</span><br/>' \
+              f'<span">{copy_text2}</span>' \
               f'</div>'
         new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
@@ -449,8 +424,8 @@ class PremierStagingClientData(ClientData):
         html = self.mobile_pp_promotional_banner
 
         # replace text
-        html_id = html.find(id='n_5OFF__2nd_item__orders_over_')
-        new = f'<div id="n_5OFF__2nd_item__orders_over_">' \
+        html_id = html.find(id='n_5_OFF__2ND_ITEM__ORDERS_OVER')
+        new = f'<div id="n_5_OFF__2ND_ITEM__ORDERS_OVER">' \
               f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text1}</span><br/>' \
               f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text2}</span><br/>' \
               f'</div>'
@@ -461,8 +436,8 @@ class PremierStagingClientData(ClientData):
 
     # cart page
 
-    def calc_desktop_cp_testimonial_banner(self, copy_text1, copy_text2, copy_text3, copy_text4, user_name):
-        return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4, user_name)
+    def calc_desktop_cp_testimonial_banner(self, copy_text1, copy_text2, user_name):
+        return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, user_name)
 
     def calc_desktop_cp_promotional_banner(self, copy_text1, copy_text2):
         return self.calc_desktop_pp_promotional_banner(copy_text1, copy_text2)
@@ -552,8 +527,7 @@ class PremierStagingClientData(ClientData):
             if not is_mobile:
                 if testimonial:
                     print('Testimonial banner')
-                    return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4,
-                                                                   user_name)
+                    return self.calc_desktop_pp_testimonial_banner(copy_text1, copy_text2, user_name)
                 else:
                     print('Promotional banner')
                     return self.calc_desktop_pp_promotional_banner(copy2_text1, copy2_text2)
@@ -566,8 +540,7 @@ class PremierStagingClientData(ClientData):
             if not is_mobile:
                 if testimonial:
                     print('Testimonial banner')
-                    return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, copy_text3, copy_text4,
-                                                                   user_name)
+                    return self.calc_desktop_cp_testimonial_banner(copy_text1, copy_text2, user_name)
                 else:
                     print('Promotional banner')
                     return self.calc_desktop_cp_promotional_banner(copy2_text1, copy2_text2)
