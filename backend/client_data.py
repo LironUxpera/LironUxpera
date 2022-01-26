@@ -94,6 +94,7 @@ class ClientData:
             last_time -= 15000
         if last_type in self.scroll_events:
             user.set_extra_time_mode()
+            # TODO Harry: why do we continue here ....
 
         plain_behaviour = self._check_plain_behaviour(last_type)
 
