@@ -107,10 +107,6 @@ class User:
                 event.from_dict(self.client, self.uuid, e)
             self.events = events
 
-        print('New User')
-        print('========')
-        print(self)
-
     def __str__(self):
         user_str = f'Client: {self.client}\n' \
                    f'UUID: {self.uuid}\n' \
@@ -154,7 +150,7 @@ class User:
         user_obj = {
             'client': self.client,
             'uuid': self.uuid,
-            'last_time' : self.last_time,
+            'last_time': self.last_time,
             'first_visit_dt': self.first_visit_dt,
             'last_visit_dt': self.last_visit_dt,
             'sessions': self.sessions,
@@ -374,6 +370,10 @@ class User:
         self.is_touch_capable = user_agent.is_touch_capable
         self.is_pc = user_agent.is_pc
         self.is_bot = user_agent.is_bot
+
+        print('Start User')
+        print('========')
+        print(self)
 
     def user_not_accessed_for_x_hours_ago(self, hours):
         if self.last_visit_dt is None:
