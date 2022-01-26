@@ -275,7 +275,7 @@ class PremierStagingClientData(ClientData):
         new = f'<div id="My_bath_time_is_never_complete">' \
               f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace user name
@@ -284,19 +284,19 @@ class PremierStagingClientData(ClientData):
               f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
               f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace cta
         html_id = html.find(id='TAKE_THE_NEXT_SETP')
         new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace product name
         html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
         new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         return html
@@ -310,19 +310,19 @@ class PremierStagingClientData(ClientData):
               f'<span style="font-size:54.72557830810547px;">{copy_text1}</span><br/>' \
               f'<span style="font-family:Poppins-Medium;font-size:62.543521881103516px;">{copy_text2}</span><br/>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace cta
         html_id = html.find(id='TAKE_THE_NEXT_SETP')
         new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace product name
         html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
         new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         return html
@@ -337,7 +337,7 @@ class PremierStagingClientData(ClientData):
               f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
               f'<span>"{copy_text3}</span><br/><span>{copy_text4}”</span><br/>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace user name
@@ -347,19 +347,19 @@ class PremierStagingClientData(ClientData):
         #       f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
         #       f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
         #       f'</div>'
-        # new_soup = BeautifulSoup(new, 'html.parser')
+        # new_soup = BeautifulSoup(new, features='html.parser')
         # html_id.replace_with(new_soup)
 
         # replace cta
         html_id = html.find(id='TAKE_THE_NEXT_SETP')
         new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace product name
         html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
         new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         return html
@@ -373,19 +373,19 @@ class PremierStagingClientData(ClientData):
               f'<span style="font-size:54.72557830810547px;">{copy_text1}</span><br/>' \
               f'<span style="font-family:Poppins-Medium;font-size:31.364599227905273px;">{copy_text2}</span><br/>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace cta
         html_id = html.find(id='TAKE_THE_NEXT_SETP')
         new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace product name
         html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
         new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         return html
@@ -404,7 +404,7 @@ class PremierStagingClientData(ClientData):
         new = f'<div id="My_bath_time_is_never_complete">' \
               f'<span>"{copy_text1}</span><br/><span>{copy_text2}”</span><br/>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         # replace user name
@@ -414,19 +414,19 @@ class PremierStagingClientData(ClientData):
         #       f'<span></span><br/><span></span><br/><span></span><br/><span></span><br/>' \
         #       f'<span style="font-size:39.0897102355957px;">{user_name}.</span>' \
         #       f'</div>'
-        # new_soup = BeautifulSoup(new, 'html.parser')
+        # new_soup = BeautifulSoup(new, features='html.parser')
         # html_id.replace_with(new_soup)
 
         # replace cta
         # html_id = html.find(id='TAKE_THE_NEXT_SETP')
         # new = f'<div id="TAKE_THE_NEXT_SETP"><span>{cta_text}</span></div>'
-        # new_soup = BeautifulSoup(new, 'html.parser')
+        # new_soup = BeautifulSoup(new, features='html.parser')
         # html_id.replace_with(new_soup)
 
         # replace product name
         # html_id = html.find(id='PERFECTION_REFINING_FACIAL_PEE')
         # new = f'<div id="PERFECTION_REFINING_FACIAL_PEE"><span>{product_name}</span><br/>/div>'
-        # new_soup = BeautifulSoup(new, 'html.parser')
+        # new_soup = BeautifulSoup(new, features='html.parser')
         # html_id.replace_with(new_soup)
 
         return html
@@ -440,7 +440,7 @@ class PremierStagingClientData(ClientData):
               f'<span style="font-size:11.75333023071289px;">{copy_text1}</span><br/>' \
               f'<span style="font-size:11.75333023071289px;">{copy_text2}</span>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         return html
@@ -454,7 +454,7 @@ class PremierStagingClientData(ClientData):
               f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text1}</span><br/>' \
               f'<span style="font-size:9.801440238952637px;letter-spacing:-0.1px;">{copy_text2}</span><br/>' \
               f'</div>'
-        new_soup = BeautifulSoup(new, 'html.parser')
+        new_soup = BeautifulSoup(new, features='html.parser')
         html_id.replace_with(new_soup)
 
         return html
