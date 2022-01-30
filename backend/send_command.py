@@ -46,7 +46,9 @@ class SendCommand:
             # connection is not autocommit by default. So you must commit to save
             # your changes.
             self.connection.commit()
-        except:
+        except Exception as e:
+            print('========= exception =========')
+            print(e)
             self.connection.rollback()
 
     def request_user_session_info(self, client, uuid):
