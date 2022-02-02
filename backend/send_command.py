@@ -39,6 +39,8 @@ class SendCommand:
         try:
             cursor = self.connection.cursor()
 
+            banner_html = '<html><body><h1>HELLO</h1></body></html>'
+
             # Create a new record
             sql = "INSERT INTO responder (client_id, user_uuid, response_type, html, configuration) VALUES (%s, %s, %s, %s, %s)"
             cursor.execute(sql, (client, uuid, 'banner', banner_html, json.dumps({'page': last_page})))
