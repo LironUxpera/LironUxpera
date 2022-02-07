@@ -70,10 +70,10 @@ class UserSession:
         # if self.client == 'premier_staging' and self.page_type != '':
         #     self.replace_generic_banner('SB', self.page_type, self.user.get_is_mobile())
 
-        if not self.user.get_replaced_generic_banner():
+        if True:  # not self.user.get_replaced_generic_banner():
             behaviour = self.client_data.check_behaviour(self.user)
+            print(f'== Calculated Behaviour = {behaviour}')
             if self.client == 'premier_staging' and self.page_type != '' and behaviour is not None:
-                print(f'== Calculated Behaviour = {behaviour}')
                 self.user.set_behaviour(behaviour)
                 self.replace_generic_banner(behaviour, self.page_type, self.user.get_is_mobile())
 
