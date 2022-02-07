@@ -138,12 +138,13 @@ class PremierStagingClientData(ClientData):
 
     def _get_canonical_event_type(self, event):
         result = event.event_type
-        print('Event TYPE == ', result)
-        print(result == 'link')
-        print(event.body is not None)
-        print('link' in event.body)
-        print(event.body)
-        if result == 'link' and event.body is not None and 'link' in event.body:
+        # print('Event TYPE == ', result)
+        # print(result == 'link')
+        # print(event.body is not None)
+        # print('link' in event.body)
+        # print(event.body)
+
+        if result == 'link' and event.body is not None and 'link' in event.body and not event.body['link'] is None:
             link = event.body['link']
             print(f'^^^ Testing link event link', link)
             link = link.split('/')[-1]
@@ -151,7 +152,7 @@ class PremierStagingClientData(ClientData):
             if match is not None:
                 print(f'^^^ Mapped link event to {match}')
                 return match
-        if result == 'link' and event.body is not None and 'link' in event.body:
+        if result == 'link' and event.body is not None and 'link' in event.body and not event.body['link'] is None:
             link = event.body['link']
             print(f'^^^ Testing link event link category', link)
             link_parts = link.split('/')
@@ -159,14 +160,14 @@ class PremierStagingClientData(ClientData):
             if match is not None:
                 print(f'^^^ Mapped link event to {match}')
                 return match
-        elif result == 'button' and event.body is not None and 'data' in event.body:
+        elif result == 'button' and event.body is not None and 'data' in event.body and not event.body['data'] is None:
             data_str = event.body['data']
             print(f'^^^ Testing button event data', data_str)
             match = self._match_data(data_str)
             if match is not None:
                 print(f'^^^ Mapped button event to {match}')
                 return match
-        elif result == 'button' and event.body is not None and 'title' in event.body:
+        elif result == 'button' and event.body is not None and 'title' in event.body and not event.body['title'] is None:
             title = event.body['title']
             print(f'^^^ Testing button event title', title)
             match = self._match_title(title)
