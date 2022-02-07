@@ -17,6 +17,10 @@ class Event:
         self.body = None
 
     def __str__(self):
+        # temp to print only for staging
+        if self.client != 'premier_staging':
+            return ''
+
         return f'Client: {self.client}\n' \
                f'UUID: {self.uuid}\n' \
                f'Type: {self.event_type}\n' \
